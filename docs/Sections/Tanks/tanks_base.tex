@@ -4,13 +4,13 @@ The anchors specifically defined for the tank asset are:
     \begin{tabular}{c|lcc|l}
         Abbreviation & Anchor name & & Abbreviation & Anchor name \\
         \hline & & & & \\
-        tNE & north & & S & south\\
-        stNE & near north & & nS & near south \\
-        ftNE & far north & & fS & far south \\
+        tNE & tube northeast & & tSE & tube southeast\\
+        stNE & semi-tube northeast & & stSE & semi-tube southeast \\
+        ftNE & full-tube northeast & & ftSE & full-tube southeast \\
         & & & & \\
-        tNW & northwest & & SW & southwest \\
-        stNW & near northwest & &  nSW & near southwest \\
-        ftNW & far northwest & &  fSW & far southwest \\
+        tNW & tube northwest & & tSW & tube southwest \\
+        stNW & semi-tube northwest & &  stSW & semi-tube southwest \\
+        ftNW & full-tube northwest & &  ftSW & full-tube southwest \\
         & & & & \\
     \end{tabular}
 \end{center}
@@ -19,7 +19,8 @@ The anchors specifically defined for the tank asset are:
     \begin{tikzpicture}
             \draw[step = 0.5cm, gray, very thin] (-4.25, -4.25) grid (4.25, 0.25);
             
-            \node[tank, scale = 1.5, /agitator=flat] (Bempty) at (-2, -2) {};
+            % , /agitator=flat
+            \node[tank, scale = 1.5] (Bempty) at (-2, -2) {};
             \node[anchor = south] at (0, 0.25) {\textbf{\textbackslash node[tank, scale = 1.5]}};
             \node[tank, scale = 1.5] (B) at (2, -2) {};
             \node[cross] at (B.center) {};
