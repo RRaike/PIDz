@@ -1,0 +1,219 @@
+\pgfkeys{
+        /mill/dimension/height/.code = {#1},
+        /mill/dimension/height/.initial = {0.75 cm},
+        /mill/dimension/width top/.code = {#1},
+        /mill/dimension/width top/.initial = {1.5 cm},
+        /mill/dimension/width bottom/.code = {#1},
+        /mill/dimension/width bottom/.initial = {0.75 cm},
+        /mill/.is choice,
+        /mill/basic/.code = {#1},
+        /mill/basic/.default = {},
+        /mill/hammer/.code = {
+            \pgfkeys{/mill/basic/.append code = {
+                \pgfpointscale{0.4}{\southeast}
+                \pgf@xa = \pgf@x
+                \pgf@ya = \pgf@y
+
+                \pgfpointscale{0.2}{\southeast}
+                \pgf@xb = \pgf@x
+                \pgf@yb = \pgf@y
+
+                \foreach \j in {-1, 1} {
+                    \foreach \k in {-1, 1} {                
+                        \pgfpathmoveto{\pgfpointorigin}
+                        \pgfpathlineto{\pgfpoint{\j \pgf@xa}{\k \pgf@ya}}
+        
+                        \pgfpathmoveto{\pgfpoint{\j \pgf@xa + \pgf@xb}{\j \pgf@ya - \pgf@yb}}
+                        \pgfpathlineto{\pgfpoint{\j \pgf@xa - \pgf@xb}{\j \pgf@ya + \pgf@yb}}
+                    }
+                }
+                
+                \pgfpathmoveto{\pgfpoint{\pgf@xa + \pgf@xb}{- \pgf@ya + \pgf@yb}}
+                \pgfpathlineto{\pgfpoint{\pgf@xa - \pgf@xb}{- \pgf@ya - \pgf@yb}}
+
+                \pgfpathmoveto{\pgfpoint{-\pgf@xa + \pgf@xb}{\pgf@ya + \pgf@yb}}
+                \pgfpathlineto{\pgfpoint{-\pgf@xa - \pgf@xb}{\pgf@ya - \pgf@yb}}
+            }
+        }},
+        /mill/impact/.code = {
+            \pgfkeys{/mill/basic/.append code = {
+                \pgfpointscale{0.3}{\southeast}
+                \pgf@xa = \pgf@x
+                
+                \pgfpathcircle{\pgfpointorigin}{\pgf@xa}
+                \pgfusepath{stroke}
+
+                \pgfpointscale{0.15 cm}{\pgfpointnormalised{\southeast}} % Normalized gives vector in right direction with lenght 1 pt. Scale to radius of circle
+                \pgf@xa = \pgf@x
+                \pgf@ya = \pgf@y
+                
+                \pgfpointscale{0.6}{\southeast}
+                \pgf@xb = \pgf@x
+                \pgf@yb = \pgf@y
+
+
+                \foreach \j in {-1, 1}{
+                    \foreach \k in {-1, 1}{
+                        \pgfpathmoveto{\pgfpoint{\j \pgf@xa}{\k \pgf@ya}}
+                        \pgfpathlineto{\pgfpoint{\j \pgf@xb}{\k \pgf@yb}}
+                    }
+                }
+            }
+        }},
+        /mill/roller/.code = {
+            \pgfkeys{/mill/basic/.append code = {
+                \pgfpointscale{0.3}{\southeast}
+                \pgf@xa = \pgf@x
+
+                \pgfpathmoveto{\pgfpointorigin}   
+                \pgfpatharc{0}{360}{\pgf@xa}
+                \pgfpathclose
+                \pgfpatharc{180}{540}{\pgf@xa}
+                \pgfpathclose                
+            }
+        }},
+        /mill/vibration/.code = {
+            \pgfkeys{/mill/basic/.append code = {
+                \pgfusepath{stroke}
+                
+                \pgfpointscale{0.6}{\southeast}
+                \pgf@xa = \pgf@x
+
+                \pgfpointscale{0.6 * 0.6}{\southeast}
+                \pgf@xb = \pgf@x
+
+                \pgfpointscale{0.6 * 0.2}{\southeast}
+                \pgf@xc = \pgf@x
+
+                \pgfsetarrowsend{Latex[length=3pt, width = 3pt]}
+                
+                \pgfpathmoveto{\pgfpoint{-\pgf@xb}{\pgf@xc}}
+                \pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@xc}}
+                \pgfusepath{stroke}
+
+                \pgfsetarrowsend{}
+                
+                \pgfpointscale{0.6}{\southeast}
+                \pgf@xa = \pgf@x
+
+                \pgfpointscale{0.6 * 0.6}{\southeast}
+                \pgf@xb = \pgf@x
+
+                \pgfpointscale{0.6 * 0.2}{\southeast}
+                \pgf@xc = \pgf@x
+                
+                \pgfsetarrowsstart{Latex[length=3pt, width = 3pt]}
+                \pgfpathmoveto{\pgfpoint{-\pgf@xb}{-\pgf@xc}}
+                \pgfpathlineto{\pgfpoint{\pgf@xb}{-\pgf@xc}}
+                \pgfusepath{stroke}
+                
+                \pgfsetarrowsstart{}
+                
+                \pgfpointscale{0.6}{\southeast}
+                \pgf@xa = \pgf@x
+                
+                \pgfpathcircle{\pgfpointorigin}{\pgf@xa}
+                \pgfpathclose                
+                \pgfusepath{stroke}
+            }
+        }},
+        /mill/.default = {\pgfkeys{/pump/basic}}
+        
+}
+
+
+\pgfdeclareshape{mill}{
+    \savedanchor{\centerpoint}{
+        \pgfpointorigin
+    }
+    \savedanchor{\north}{
+        \pgfpointscale{0.5}{\pgfpoint{0}{\pgfkeysvalueof{/mill/dimension/height}}}
+    }
+    \savedanchor{\northeast}{
+        \pgfpointscale{0.5}{\pgfpoint{\pgfkeysvalueof{/mill/dimension/width top}}{\pgfkeysvalueof{/mill/dimension/height}}}
+    }   
+    \savedanchor{\southeast}{
+        \pgfpointscale{0.5}{\pgfpoint{\pgfkeysvalueof{/mill/dimension/width bottom}}{\pgfkeysvalueof{/mill/dimension/height}}}
+        \pgf@y = -\pgf@y
+    }
+
+    
+    \anchor{center}{
+        \centerpoint
+    }
+    \anchor{north}{
+        \north
+    }
+    \anchor{east}{
+        \southeast
+        \pgfpoint{1.5\pgf@x}{0}
+    }
+    \anchor{west}{
+        \southeast
+        \pgfpoint{-1.5\pgf@x}{0}
+    }
+    \anchor{south}{
+        \north
+        \pgfpoint{\pgf@x}{-\pgf@y}
+    }
+    \anchor{northeast}{
+        \northeast
+    }
+    \anchor{near northeast}{
+        \northeast
+        \pgf@x = 0.75 \pgf@x
+    }
+    \anchor{northwest}{
+        \northeast
+        \pgf@x = -\pgf@x
+    }
+    \anchor{near northwest}{
+        \northeast
+        \pgf@x = -0.75 \pgf@x
+    }
+    \anchor{southeast}{
+        \southeast
+    }
+    \anchor{southwest}{
+        \southeast
+        \pgf@x = -\pgf@x
+    }
+
+    
+    \backgroundpath{
+        \pgfpathmoveto{\north}
+        \pgfpathlineto{\northeast}
+        \pgfpathlineto{\southeast}
+        \southeast
+        \pgfpathlineto{\pgfpoint{-\pgf@x}{\pgf@y}}
+        \northeast
+        \pgfpathlineto{\pgfpoint{-\pgf@x}{\pgf@y}}
+        \pgfpathclose
+
+        \pgfpointscale{0.5}{\northeast}
+        \pgf@xa = \pgf@x
+        
+        \northeast
+        \pgf@ya = \pgf@y
+
+        \pgfusepath{clip, stroke}
+        
+        \pgfpointpolar{-45}{10 \pgf@xa}
+        \pgfpoint{\pgf@xa + \pgf@x}{\pgf@ya + \pgf@y}
+        \pgf@xb = \pgf@x
+        \pgf@yb = \pgf@y
+
+        
+        \pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@ya}}
+        \pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@yb}}
+        
+        \pgfpathmoveto{\pgfpoint{-\pgf@xa}{\pgf@ya}}
+        \pgfpathlineto{\pgfpoint{-\pgf@xb}{\pgf@yb}}
+        
+        \pgfusepath{stroke}
+        
+        \pgfkeys{/mill/basic}
+    
+        \pgfusepath{stroke}
+    }
+}

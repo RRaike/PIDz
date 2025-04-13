@@ -1,0 +1,37 @@
+\pgfkeys{
+    /agitator/.is choice,
+    /agitator/draw/.code = {},
+    /agitator/general/.code = {
+        \pgfkeys{/agitator/draw/.append code = {
+            \pgfpathmoveto{\north}
+            \pgfpathlineto{\centerpoint}
+
+            \east
+            \pgf@xa = \pgf@x
+
+            \pgfpathmoveto{\pgfpoint{-0.4\pgf@xa}{-0.25\pgf@xa}}
+            \pgfpathlineto{\pgfpoint{-0.4\pgf@xa}{0.25\pgf@xa}}
+            \pgfpathlineto{\pgfpoint{0.4\pgf@xa}{-0.25\pgf@xa}}
+            \pgfpathlineto{\pgfpoint{0.4\pgf@xa}{0.25\pgf@xa}}
+
+            \pgfusepath{stroke}
+        }
+    }},
+    /agitator/flat/.code = {
+        \pgfkeys{/agitator/draw/.append code = {
+            \pgfpathmoveto{\north}
+
+            \east
+            \pgf@xa = 0.3\pgf@x
+
+            \pgfpathlineto{\pgfpoint{0}{\pgf@xa}}
+            \pgfpathlineto{\pgfpoint{\pgf@xa}{\pgf@xa}}
+            \pgfpathlineto{\pgfpoint{\pgf@xa}{-\pgf@xa}}
+            \pgfpathlineto{\pgfpoint{-\pgf@xa}{-\pgf@xa}}
+            \pgfpathlineto{\pgfpoint{-\pgf@xa}{\pgf@xa}}
+            \pgfpathlineto{\pgfpoint{0}{\pgf@xa}}
+
+            \pgfusepath{stroke}
+        }
+    }},
+}

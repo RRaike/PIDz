@@ -1,0 +1,101 @@
+\pgfkeys{
+        /HE round/dimension/radius/.code = {#1},
+        /HE round/dimension/radius/.initial = {0.5cm},
+        /HE round/.is choice,
+        /HE round/basic/.code = {#1},
+        /HE round/basic/.default = {},
+        /HE round/general/.code = {
+            \pgfkeys{/HE round/basic/.append code = {
+                \east
+                \pgf@xa = 0.5\pgf@x
+                
+                \east
+                \pgfpathmoveto{\pgfpoint{-\pgf@x}{0}}
+                \pgfpathlineto{\pgfpoint{-\pgf@xa}{0}}
+                
+                \pgfpathlineto{\pgfpoint{0}{\pgf@xa}}
+                \pgfpathlineto{\pgfpoint{0}{-\pgf@xa}}
+                \pgfpathlineto{\pgfpoint{\pgf@xa}{0}}
+                \pgfpathlineto{\east}
+
+                \pgfusepath{stroke}
+            }
+        }},
+        /HE round/m/.code = {
+            \pgfkeys{/HE round/basic/.append code = {
+                \pgfpointpolar{30}{\pgfkeysvalueof{/HE round/dimension/radius}}
+                \pgf@xa = \pgf@x
+                \pgf@ya = \pgf@y
+
+                \pgfpathmoveto{\pgfpoint{1.5 \pgf@xa}{\pgf@ya}}
+                \pgfpathlineto{\pgfpoint{-0.6 \pgf@xa}{\pgf@ya}}
+                \pgfpathlineto{\centerpoint}
+                \pgfpathlineto{\pgfpoint{-0.6 \pgf@xa}{-\pgf@ya}}
+                \pgfpathlineto{\pgfpoint{1.5 \pgf@xa}{-\pgf@ya}}
+
+                \pgfusepath{stroke}
+            }
+        }},
+        /HE round/.default = {\pgfkeys{/HE round/basic}}
+}
+
+\pgfdeclareshape{HE round}{
+    \savedanchor{\centerpoint}{\pgfpointorigin}
+    \savedanchor{\north}{\pgfpoint{0}{\pgfkeysvalueof{/HE round/dimension/radius}}}
+    \savedanchor{\east}{\pgfpoint{\pgfkeysvalueof{/HE round/dimension/radius}}{0}}
+
+    \anchor{center}{\centerpoint}
+    \anchor{north}{
+        \north
+    }
+    \anchor{east}{
+        \east
+    }
+    \anchor{west}{
+        \east
+        \pgf@x = -\pgf@x
+    }
+    \anchor{south}{
+        \north
+        \pgf@y = -\pgf@y
+    }
+    \anchor{northeast}{
+        \east
+        \pgf@xa = \pgf@x
+        \pgfpoint{0.886\pgf@xa}{0.5\pgf@xa}
+    }
+    \anchor{far northeast}{
+        \east
+        \pgf@xa = \pgf@x
+        \pgfpoint{1.329\pgf@xa}{0.5\pgf@xa}
+    }
+    \anchor{southeast}{
+        \east
+        \pgf@xa = \pgf@x
+        \pgfpoint{0.886\pgf@xa}{-0.5\pgf@xa}
+    }
+    \anchor{far southeast}{
+        \east
+        \pgf@xa = \pgf@x
+        \pgfpoint{1.329\pgf@xa}{-0.5\pgf@xa}
+    }
+    \anchor{northwest}{
+        \east
+        \pgf@xa = \pgf@x
+        \pgfpoint{-0.886\pgf@xa}{0.5\pgf@xa}
+    }
+    \anchor{southwest}{
+        \east
+        \pgf@xa = \pgf@x
+        \pgfpoint{-0.886\pgf@xa}{-0.5\pgf@xa}
+    }
+
+    \backgroundpath{
+        \pgfpathcircle{\centerpoint}{\pgfkeysvalueof{/HE round/dimension/radius}}
+        \pgfusepath{stroke}
+
+        \pgfkeys{/HE round/basic}
+    
+        \pgfusepath{stroke}
+    }
+}

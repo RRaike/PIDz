@@ -1,0 +1,353 @@
+\pgfkeys{
+        /column/dimension/width/.code = {#1},
+        /column/dimension/width/.initial = {1 cm},
+        /column/dimension/height/.code = {#1},
+        /column/dimension/height/.initial = {1 cm},
+        /column/dimension/radius/.code = {#1},
+        /column/dimension/radius/.initial = {0.2 cm},
+        /column/.is choice,
+        /column/basic/.code = {#1},
+        /column/basic/.default = {},
+        /column/tray/.code = {
+            \pgfkeys{/column/basic/.append code = {
+                \pgfusepath{stroke}
+
+                \pgfsetdash{{2 mm}{2 mm}}{0 mm}
+
+                \pgfpathmoveto{\east}
+                \east
+                \pgfpathlineto{\pgfpoint{-\pgf@x}{\pgf@y}}
+
+                \pgfusepath{stroke}
+                \pgfsetdash{}{0pt}
+            }
+        }},
+        /column/fluidized/.code = {
+            \pgfkeys{/column/basic/.append code = {
+                \pgfusepath{stroke}
+                \northeast
+                \pgf@xa = \pgf@x
+                \pgf@ya = \pgf@y
+
+                \foreach \j in {-0.7, -0.5, -0.3, ..., 0.71}{
+                    \pgfpointscale{\j}{\pgfpoint{\pgf@xa}{\pgf@ya}}
+                    \pgf@yb = \pgf@y
+
+                    \foreach \k in {-0.75, -0.5, ...,0.75} {
+                        \pgfpointscale{\k}{\pgfpoint{\pgf@xa}{0}}
+                        \pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@yb}}{0.5 pt}
+                    }
+                }
+
+                \foreach \j in {-0.6, -0.4, ..., 0.61}{
+                    \pgfpointscale{\j}{\pgfpoint{\pgf@xa}{\pgf@ya}}
+                    \pgf@yb = \pgf@y
+
+                    \foreach \k in {-0.875, -0.625, ..., 0.875} {
+                        \pgfpointscale{\k}{\pgfpoint{\pgf@xa}{0}}
+                        \pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@yb}}{0.5 pt}
+                    }
+                }
+                \pgfusepath{fill}
+            }
+        }},
+        /column/fixed/.code = {
+            \pgfkeys{/column/basic/.append code = {
+                \pgfusepath{stroke}
+
+                \pgfpointscale{0.8}{\northeast}
+                \pgf@ya = \pgf@y
+
+                \northeast
+                \pgf@xa = \pgf@x
+                
+                \pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@ya}}
+                \pgfpathlineto{\pgfpoint{-\pgf@xa}{-\pgf@ya}}
+                
+                \pgfpathmoveto{\pgfpoint{-\pgf@xa}{\pgf@ya}}
+                \pgfpathlineto{\pgfpoint{\pgf@xa}{-\pgf@ya}}
+
+                \pgfusepath{stroke}
+            }
+        }},
+        /column/staggered baffle/.code = {
+            \pgfkeys{/column/basic/.append code = {
+                \pgfusepath{stroke}
+
+                \pgfpointscale{0.8}{\northeast}
+                \pgf@ya = \pgf@y
+
+                \pgfpointscale{0.7}{\east}
+                \pgf@xa = \pgf@x
+                
+                \foreach \j in {-0.5, 0.5}{
+                    \pgfsetdash{{0.1 cm}{0.1 cm}}{0 cm}
+
+                    \pgfpointscale{\j}{\pgfpoint{0}{\pgf@ya}}
+                    \pgf@yb = \pgf@y
+
+                    \east
+                    \pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@yb}}
+                    \pgfpathlineto{\pgfpoint{-\pgf@xa}{\pgf@yb}}
+                    \pgfpathlineto{\pgfpoint{-\pgf@xa}{\pgf@yb}}
+
+                    \pgfpointscale{\j + 0.2}{\pgfpoint{0}{\pgf@ya}}
+                    \pgf@yb = \pgf@y
+
+                    \pgfpathlineto{\pgfpoint{-\pgf@xa}{\pgf@y}}
+                    
+                }
+
+                \east
+                \pgfpathmoveto{\pgfpoint{-\pgf@x}{0}}
+                \pgfpathlineto{\pgfpoint{\pgf@xa}{0}}
+                \pgfpathlineto{\pgfpoint{\pgf@xa}{0}}
+
+                \pgfpointscale{0.2}{\pgfpoint{0}{\pgf@ya}}
+                \pgf@yb = \pgf@y
+
+                \pgfpathlineto{\pgfpoint{\pgf@xa}{\pgf@y}}
+                
+                \pgfusepath{stroke}
+                \pgfsetdash{}{0pt}
+            }
+        }},     
+        /column/bubble caps/.code = {
+            \pgfkeys{/column/basic/.append code = {
+                \pgfusepath{stroke}
+
+                \pgfpointscale{0.8}{\northeast}
+                \pgf@ya = \pgf@y
+
+                \pgfpointscale{0.2}{\east}
+                \pgf@xa = \pgf@x
+
+                \pgfpointscale{0.4}{\east}
+                \pgf@xb = \pgf@x
+                
+                \foreach \j in {-0.6, -0.2, 0.2, 0.6}{
+
+                    \pgfpointscale{\j}{\pgfpoint{0}{\pgf@ya}}
+                    \pgf@yb = \pgf@y
+
+                    \east
+                    \pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@yb}}
+                    \pgfpathlineto{\pgfpoint{\pgf@xa}{\pgf@yb}}
+
+                    
+                    \east
+                    \pgfpathmoveto{\pgfpoint{-\pgf@x}{\pgf@yb}}
+                    \pgfpathlineto{\pgfpoint{-\pgf@xa}{\pgf@yb}}
+
+                    \pgfpointscale{\j + 0.1}{\pgfpoint{0}{\pgf@ya}}
+                    \pgf@yb = \pgf@y
+
+                    \pgfpathmoveto{\pgfpoint{\pgf@xb}{\pgf@yb}}
+                    \pgfpatharc{45}{135}{1.41 \pgf@xb and 0.3 \pgf@ya}
+                    \pgfusepath{stroke}
+                }
+            }
+        }},     
+        /column/valve/.code = {
+            \pgfkeys{/column/basic/.append code = {
+                \pgfusepath{stroke}
+
+                \pgfpointscale{0.8}{\northeast}
+                \pgf@ya = \pgf@y
+
+                \pgfpointscale{0.2}{\east}
+                \pgf@xa = \pgf@x
+                
+                \foreach \j in {-0.5, 0, 0.5}{
+
+                    \pgfpointscale{\j}{\pgfpoint{0}{\pgf@ya}}
+                    \pgf@yb = \pgf@y
+
+                    \east
+                    \pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@yb}}
+                    \pgfpathlineto{\pgfpoint{\pgf@xa}{\pgf@yb}}
+
+                    
+                    \east
+                    \pgfpathmoveto{\pgfpoint{-\pgf@x}{\pgf@yb}}
+                    \pgfpathlineto{\pgfpoint{-\pgf@xa}{\pgf@yb}}
+
+                    \pgfpointscale{\j + 0.1}{\pgfpoint{0}{\pgf@ya}}
+                    \pgf@yb = \pgf@y
+
+                    \pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@yb}}
+                    \pgfpathlineto{\pgfpoint{-\pgf@xa}{\pgf@yb}}
+                    \pgfusepath{stroke}
+                }
+            }
+        }},     
+        /column/double fixed/.code = {
+            \pgfkeys{/column/basic/.append code = {
+                \pgfusepath{stroke}
+
+                \pgfpointscale{0.8}{\northeast}
+                \pgf@ya = \pgf@y
+
+                \pgfpointscale{0.25}{\northeast}
+                \pgf@yb = \pgf@y
+
+                \pgfpointscale{0.15}{\northeast}
+                \pgf@yc = \pgf@y
+
+                \east
+                \pgf@xa = \pgf@x
+                
+                \pgfsetdash{{0.2 cm}{0.2 cm}}{0 cm}
+
+                \pgfpathmoveto{\pgfpoint{-\pgf@xa}{\pgf@yb}}
+                \pgfpathlineto{\pgfpoint{\pgf@xa}{\pgf@yb}}
+
+                \pgfpathmoveto{\pgfpoint{-\pgf@xa}{-\pgf@yb}}
+                \pgfpathlineto{\pgfpoint{\pgf@xa}{-\pgf@yb}}
+
+                \pgfusepath{stroke}
+                \pgfsetdash{}{0 pt}
+
+                \east
+                \pgf@xa = \pgf@x
+                
+                \foreach \j in {-1, 1}{
+                    \pgfpathmoveto{\pgfpoint{-\pgf@xa}{\j \pgf@ya}}
+                    \pgfpathlineto{\pgfpoint{\pgf@xa}{\j \pgf@yb}}
+                    
+                    \pgfpathmoveto{\pgfpoint{\pgf@xa}{\j \pgf@ya}}
+                    \pgfpathlineto{\pgfpoint{-\pgf@xa}{\j \pgf@yb}}
+                }
+
+                \pgfusepath{stroke}
+            }
+        }},
+        /column/spray/.code = {
+            \pgfkeys{/column/basic/.append code = {
+                \pgfusepath{stroke}
+
+                \pgfpointscale{0.8}{\northeast}
+                \pgf@ya = \pgf@y
+
+                \pgfpointscale{0.25}{\northeast}
+                \pgf@yb = \pgf@y
+
+                \pgfpointscale{0.15}{\northeast}
+                \pgf@yc = \pgf@y
+
+                \east
+                \pgf@xa = \pgf@x
+                
+                \pgfpathmoveto{\pgfpoint{-\pgf@xa}{0}}
+                \pgfpathlineto{\centerpoint}
+
+                \pgfpathmoveto{\centerpoint}
+                \pgfpathlineto{\pgfpoint{-\pgf@yc}{-\pgf@yc}}
+                
+                \pgfpathmoveto{\centerpoint}
+                \pgfpathlineto{\pgfpoint{0}{-\pgf@yc}}
+                
+                \pgfpathmoveto{\centerpoint}
+                \pgfpathlineto{\pgfpoint{\pgf@yc}{-\pgf@yc}}
+
+                \pgfusepath{stroke}
+
+            }
+        }},
+        /column/.default = {\pgfkeys{/column/basic}}
+}
+
+\pgfdeclareshape{column}{
+    \savedanchor{\centerpoint}{\pgfpointorigin}
+    \savedanchor{\east}{
+        \pgfpointscale{0.5}{\pgfpoint{\pgfkeysvalueof{/column/dimension/width}}{0}}
+    }
+    \savedanchor{\northeast}{
+        \pgfpointscale{0.5}{\pgfpoint{\pgfkeysvalueof{/column/dimension/width}}{\pgfkeysvalueof{/column/dimension/height}}}
+    }
+
+    \anchor{center}{
+        \centerpoint
+    }
+    \anchor{north}{
+        \northeast
+        \pgfpoint{0}{1.4\pgf@y}
+    }
+    \anchor{east}{
+        \east
+    }
+    \anchor{west}{
+        \east
+        \pgf@x = -\pgf@x
+    }
+    \anchor{south}{
+        \northeast
+        \pgfpoint{0}{-1.4\pgf@y}
+    }
+    \anchor{northeast}{
+        \northeast
+    }
+    \anchor{near northeast}{
+        \northeast
+        \pgfpoint{\pgf@x}{0.6\pgf@y}
+    }
+    \anchor{southeast}{
+        \northeast
+        \pgfpoint{\pgf@x}{-\pgf@y}
+    }
+    \anchor{near southeast}{
+        \northeast
+        \pgfpoint{\pgf@x}{-0.6\pgf@y}
+    }
+    \anchor{northwest}{
+        \northeast
+        \pgfpoint{-\pgf@x}{\pgf@y}
+    }
+    \anchor{near northwest}{
+        \northeast
+        \pgfpoint{-\pgf@x}{0.6\pgf@y}
+    }
+    \anchor{southwest}{
+        \northeast
+        \pgfpoint{-\pgf@x}{-\pgf@y}
+    }
+    \anchor{near southwest}{
+        \northeast
+        \pgfpoint{-\pgf@x}{-0.6\pgf@y}
+    }
+
+
+    \backgroundpath{
+        \northeast
+        \pgf@xa = \pgf@x
+        \pgf@ya = \pgf@y
+
+        \east
+        \pgf@xb = \pgf@x
+
+        \pgfpathmoveto{\northeast}
+        \pgfpatharc{0}{180}{\pgf@xb and \pgfkeysvalueof{/column/dimension/radius}}
+        \pgfpathlineto{\pgfpoint{-\pgf@xa}{-\pgf@ya}}
+        \pgfpatharc{180}{360}{\pgf@xb and \pgfkeysvalueof{/column/dimension/radius}}
+        \pgfpathclose
+
+        \pgfusepath{stroke}
+
+        \pgfsetdash{{0.2 cm}{0.2 cm}}{0 cm}
+        \pgfpointscale{0.8}{\northeast}
+        \pgf@ya = \pgf@y
+
+        \pgfpathmoveto{\pgfpoint{-\pgf@xb}{\pgf@ya}}
+        \pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@ya}}
+
+        \pgfpathmoveto{\pgfpoint{-\pgf@xb}{-\pgf@ya}}
+        \pgfpathlineto{\pgfpoint{\pgf@xb}{-\pgf@ya}}
+
+        \pgfusepath{stroke}
+        \pgfsetdash{}{0pt}
+
+        \pgfkeys{/column/basic}
+    
+        \pgfusepath{stroke}
+    }
+}

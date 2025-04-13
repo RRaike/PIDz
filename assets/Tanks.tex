@@ -1,0 +1,769 @@
+\pgfkeys{
+    /tank/dimension/height/.code = {#1},
+    /tank/dimension/height/.initial = {2 cm},
+    /tank/dimension/width/.code = {#1},
+    /tank/dimension/width/.initial = {1.25 cm},
+    /tank/dimension/radius dish/.code = {#1},
+    /tank/dimension/radius dish/.initial = {0.2 cm},
+    /tank/.is choice,
+    /tank/draw/.code = {},
+    /tank/legs/.code = {
+        \pgfkeys{/tank/draw/.append code = {
+            \northeast
+            \pgf@xa = \pgf@x
+            \pgf@ya = \pgf@y
+
+            \innerleg
+            \pgf@xb = \pgf@x
+            \pgf@yb = \pgf@y
+
+            \pgfpathmoveto{\pgfpoint{\pgf@xa}{-\pgf@ya}}
+            \pgfpathlineto{\pgfpoint{\pgf@xa}{-1.5\pgf@ya}}
+            \pgfpathlineto{\pgfpoint{\pgf@xb}{-1.5\pgf@ya}}
+            \pgfpathlineto{\pgfpoint{\pgf@xb}{-\pgf@yb}}
+
+            \pgfpathmoveto{\pgfpoint{-\pgf@xa}{-\pgf@ya}}
+            \pgfpathlineto{\pgfpoint{-\pgf@xa}{-1.5\pgf@ya}}
+            \pgfpathlineto{\pgfpoint{-\pgf@xb}{-1.5\pgf@ya}}
+            \pgfpathlineto{\pgfpoint{-\pgf@xb}{-\pgf@yb}}
+
+            \pgfusepath{stroke}
+        }
+    }},
+    /tank/brackets/.code = {
+        \pgfkeys{/tank/draw/.append code = {
+            \northeast
+            \pgf@xa = \pgf@x
+            \pgf@xb = 1.5 \pgf@x
+
+            \pgf@ya = 0.1 \pgf@y
+            \pgf@yb = 0.5 \pgf@y
+
+            \pgfpathmoveto{\pgfpoint{\pgf@xa}{-\pgf@ya}}
+            \pgfpathlineto{\pgfpoint{\pgf@xb}{-\pgf@yb}}
+            \pgfpathlineto{\pgfpoint{\pgf@xa}{-\pgf@yb}}
+
+            \pgfpathmoveto{\pgfpoint{-\pgf@xa}{-\pgf@ya}}
+            \pgfpathlineto{\pgfpoint{-\pgf@xb}{-\pgf@yb}}
+            \pgfpathlineto{\pgfpoint{-\pgf@xa}{-\pgf@yb}}
+
+            \pgfusepath{stroke}
+        }
+    }},
+    /tank/skirt/.code = {
+        \pgfkeys{/tank/draw/.append code = {
+            \northeast
+            \pgf@xa = \pgf@x
+            \pgf@xb = 0.5 \pgf@x
+
+            \pgf@ya = \pgf@y
+            \pgf@yb = 1.5 \pgf@y
+
+            \pgfpathmoveto{\pgfpoint{\pgf@xa}{-\pgf@ya}}
+            \pgfpathlineto{\pgfpoint{\pgf@xa}{-\pgf@yb}}
+            \pgfpathlineto{\pgfpoint{\pgf@xb}{-\pgf@yb}}
+
+            \pgfpathmoveto{\pgfpoint{-\pgf@xa}{-\pgf@ya}}
+            \pgfpathlineto{\pgfpoint{-\pgf@xa}{-\pgf@yb}}
+            \pgfpathlineto{\pgfpoint{-\pgf@xb}{-\pgf@yb}}
+
+            \pgfusepath{stroke}
+        }
+    }},
+    /tank/ring/.code = {
+        \pgfkeys{/tank/draw/.append code = {
+            \northeast
+            \pgf@xa = \pgf@x
+            \pgf@xb = 1.2 \pgf@x
+
+            \pgf@ya = 0.55 \pgf@y
+            \pgf@yb = 0.6 \pgf@y
+
+            \pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@ya}}
+            \pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@ya}}
+            \pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@yb}}
+            \pgfpathlineto{\pgfpoint{\pgf@xa}{\pgf@yb}}
+
+            \pgfpathmoveto{\pgfpoint{-\pgf@xa}{\pgf@ya}}
+            \pgfpathlineto{\pgfpoint{-\pgf@xb}{\pgf@ya}}
+            \pgfpathlineto{\pgfpoint{-\pgf@xb}{\pgf@yb}}
+            \pgfpathlineto{\pgfpoint{-\pgf@xa}{\pgf@yb}}
+
+            \pgfusepath{stroke}
+        }
+    }},
+    /tank/jacket/.code = {
+        \pgfkeys{/tank/draw/.append code = {
+            \northeast
+            \pgf@xa = \pgf@x
+            \pgf@xb = 1.2 \pgf@x
+
+            \pgf@ya = 0.8 \pgf@y
+
+            \pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@ya}}
+            \pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@ya}}
+            \pgfpathlineto{\pgfpoint{\pgf@xb}{-\pgf@ya}}
+            \pgfpathlineto{\pgfpoint{\pgf@xa}{-\pgf@ya}}
+
+            \pgfpathmoveto{\pgfpoint{-\pgf@xa}{\pgf@ya}}
+            \pgfpathlineto{\pgfpoint{-\pgf@xb}{\pgf@ya}}
+            \pgfpathlineto{\pgfpoint{-\pgf@xb}{-\pgf@ya}}
+            \pgfpathlineto{\pgfpoint{-\pgf@xa}{-\pgf@ya}}
+
+            \pgfusepath{stroke}
+        }
+    }},
+    /tank/electrical heating/.code = {
+        \pgfkeys{/tank/draw/.append code = {
+            \northeast
+            \pgf@xa = 1.1 \pgf@x
+            \pgf@xb = 1.3 \pgf@x
+            \pgf@xc = 1.2 \pgf@x
+
+            \pgf@ya = 0.25 \pgf@y
+            \pgf@yb = 0.35 \pgf@y
+
+            \pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@ya}}
+            \pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@ya}}
+            \pgfpathlineto{\pgfpoint{\pgf@xb}{-\pgf@ya}}
+            \pgfpathlineto{\pgfpoint{\pgf@xa}{-\pgf@ya}}
+            \pgfpathclose
+
+            \pgfpathmoveto{\pgfpoint{\pgf@xc}{\pgf@ya}}
+            \pgfpathlineto{\pgfpoint{\pgf@xc}{\pgf@yb}}
+
+            \pgfpathmoveto{\pgfpoint{\pgf@xc}{-\pgf@ya}}
+            \pgfpathlineto{\pgfpoint{\pgf@xc}{-\pgf@yb}}
+
+            \foreach \j in {-0.5, 0, 0.5}{
+                \pgfpointscale{\j}{\pgfpoint{0}{\pgf@ya}}
+                \pgf@yc = \pgf@y
+
+                \pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@yc}}
+                \pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@yc}}
+            }
+
+            \pgfusepath{stroke}
+        }
+    }},
+    /tank/insulation/.code = {
+        \pgfkeys{/tank/draw/.append code = {
+            \northeast
+            \pgf@xa = \pgf@x
+            \pgf@xb = 1.2 \pgf@x
+
+            \pgf@ya = 0.8 \pgf@y
+
+            \pgfpathmoveto{\pgfpoint{\pgf@xb}{\pgf@ya}}
+            \pgfpathlineto{\pgfpoint{\pgf@xb}{-\pgf@ya}}
+
+            \pgfpathmoveto{\pgfpoint{-\pgf@xb}{\pgf@ya}}
+            \pgfpathlineto{\pgfpoint{-\pgf@xb}{-\pgf@ya}}
+
+            \pgfusepath{stroke}
+
+            \northeast
+            \pgf@xa = \pgf@x
+            \pgf@xb = 1.2 \pgf@x
+
+            \pgf@ya = 0.8 \pgf@y
+
+            \pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@ya}}
+            \pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@ya}}
+            \pgfpathlineto{\pgfpoint{\pgf@xb}{-\pgf@ya}}
+            \pgfpathlineto{\pgfpoint{\pgf@xa}{-\pgf@ya}}
+
+            \pgfpathmoveto{\pgfpoint{-\pgf@xa}{\pgf@ya}}
+            \pgfpathlineto{\pgfpoint{-\pgf@xb}{\pgf@ya}}
+            \pgfpathlineto{\pgfpoint{-\pgf@xb}{-\pgf@ya}}
+            \pgfpathlineto{\pgfpoint{-\pgf@xa}{-\pgf@ya}}
+
+            \pgfusepath{clip}
+
+            \northeast
+            \pgf@xa = \pgf@x
+            \pgf@xb = 1.2 \pgf@x
+
+            \pgf@ya = 0.8 \pgf@y
+
+
+            \foreach \j in {-1.05, -0.90, -0.75, ..., 1.15}{
+                \pgfpointscale{\j}{\pgfpoint{0}{\pgf@ya}}
+                \pgf@yb = \pgf@y
+
+                \pgfpointscale{\j - 0.15}{\pgfpoint{0}{\pgf@ya}}
+                \pgf@yc = \pgf@y
+
+                \pgfpathmoveto{\pgfpoint{-\pgf@xa}{\pgf@yb}}
+                \pgfpathlineto{\pgfpoint{-\pgf@xb}{\pgf@yc}}
+                
+                \pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@yc}}
+                \pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@yb}}   
+            }
+
+            \pgfusepath{stroke}
+        }
+    }},
+    /tank/surface indication/.code = {
+        \pgfkeys{/tank/draw/.append code = {
+            \northeast
+            \pgf@xa = \pgf@x
+
+            \pgf@ya = 0.7 \pgf@y
+            \pgf@yb = 0.8 \pgf@y
+
+            \pgfpathmoveto{\pgfpoint{-\pgf@xa}{\pgf@ya}}
+            \pgfpathlineto{\pgfpoint{\pgf@xa}{\pgf@ya}}
+
+            \pgfpathmoveto{\pgfpoint{0}{\pgf@yb}}
+            \pgfpathlineto{\pgfpoint{-0.3 \pgf@xa}{\pgf@yb}}
+            \pgfpathlineto{\pgfpoint{-0.2 \pgf@xa}{\pgf@ya}}
+            \pgfpathlineto{\pgfpoint{-0.1 \pgf@xa}{\pgf@yb}}
+
+            \pgfusepath{stroke}
+        }
+    }},
+    /tank/full-tube coil/.code = {
+        \pgfkeys{/tank/draw/.append code = {
+            \northeast
+            \pgf@xa = \pgf@x
+
+            \pgf@ya = 0.6 \pgf@y
+            \pgf@yb = 0.15 \pgf@y
+
+            \pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@ya}}
+            \pgfpatharc{-180}{180}{\pgf@yb}
+            \pgfpathclose
+
+            \pgfpathmoveto{\pgfpoint{\pgf@xa}{-0.3 \pgf@ya}}
+            \pgfpatharc{-180}{180}{\pgf@yb}
+            \pgfpathclose
+
+            \pgfpathmoveto{\pgfpoint{- \pgf@xa}{0.3 \pgf@ya}}
+            \pgfpatharc{0}{360}{\pgf@yb}
+            \pgfpathclose
+            
+            \pgfpathmoveto{\pgfpoint{-\pgf@xa}{-\pgf@ya}}
+            \pgfpatharc{0}{360}{\pgf@yb}
+            \pgfpathclose
+
+            \pgfusepath{stroke}
+        }
+    }},
+    /tank/semi-tube coil/.code = {
+        \pgfkeys{/tank/draw/.append code = {
+            \northeast
+            \pgf@xa = \pgf@x
+
+            \pgf@ya = 0.75 \pgf@y
+            \pgf@yb = 0.15 \pgf@y
+
+            \pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@ya}}
+            \pgfpatharc{90}{-90}{\pgf@yb}
+            \pgfpathclose
+
+            \pgfpathmoveto{\pgfpoint{\pgf@xa}{-0.45 \pgf@ya}}
+            \pgfpatharc{-90}{90}{\pgf@yb}
+            \pgfpathclose
+
+            \pgfpathmoveto{\pgfpoint{- \pgf@xa}{0.45 \pgf@ya}}
+            \pgfpatharc{90}{270}{\pgf@yb}
+            \pgfpathclose
+            
+            \pgfpathmoveto{\pgfpoint{-\pgf@xa}{-\pgf@ya}}
+            \pgfpatharc{270}{90}{\pgf@yb}
+            \pgfpathclose
+
+            \pgfusepath{stroke}
+        }
+    }},
+    /tank/dished jacket/.code = {
+        \pgfkeys{/tank/draw/.append code = {
+            \northeast
+            \pgf@xa = \pgf@x
+            \pgf@ya = \pgf@y
+
+            \pgfpathmoveto{\east}
+            \pgfpathlineto{\pgfpoint{1.2 \pgf@xa}{-0.1 \pgf@ya}}
+            \pgfpathlineto{\pgfpoint{1.2 \pgf@xa}{-1.1 \pgf@ya}}
+            \pgfpatharc{0}{-80}{1.2 \pgf@xa and \pgfkeysvalueof{/tank/dimension/radius dish}}
+            \north
+            \pgfpathlineto{\pgfpoint{0}{-\pgf@y}}
+
+            \east
+            \pgfpathmoveto{\pgfpoint{-\pgf@x}{\pgf@y}}
+            \pgfpathlineto{\pgfpoint{-1.2 \pgf@xa}{-0.1 \pgf@ya}}
+            \pgfpathlineto{\pgfpoint{-1.2 \pgf@xa}{-1.1 \pgf@ya}}
+            \pgfpatharc{180}{260}{1.2 \pgf@xa and \pgfkeysvalueof{/tank/dimension/radius dish}}
+            \north
+            \pgfpathlineto{\pgfpoint{0}{-\pgf@y}}
+
+            \pgfusepath{stroke}
+        }
+    }},
+}
+
+
+\pgfdeclareshape{tank}{
+    \savedanchor{\centerpoint}{\pgfpointorigin}
+    \savedanchor{\east}{
+        \pgfpointscale{0.5}{\pgfpoint{\pgfkeysvalueof{/tank/dimension/width}}{0}}
+    }
+    \savedanchor{\north}{
+        \pgfpointscale{0.5}{\pgfpoint{0}{\pgfkeysvalueof{/tank/dimension/height}}}
+    }
+    \savedanchor{\northeast}{
+        \pgfpointscale{0.5}{\pgfpoint{\pgfkeysvalueof{/tank/dimension/width}}{\pgfkeysvalueof{/tank/dimension/height}}}
+    }
+    \savedanchor{\innerleg}{
+        \pgfpoint{0.375*\pgfkeysvalueof{/tank/dimension/width}}{0.5*\pgfkeysvalueof{/tank/dimension/height}}
+    }
+    
+
+    \anchor{center}{\centerpoint}
+    \anchor{east}{
+        \east
+    }
+    \anchor{far east}{
+        \east
+        \pgf@x = 1.2\pgf@x
+    }
+    \anchor{west}{
+        \east
+        \pgf@x = -\pgf@x
+    }
+    \anchor{far west}{
+        \east
+        \pgf@x = -1.2 \pgf@x
+    }
+    \anchor{north}{
+        \north
+    }
+    \anchor{south}{
+        \north
+        \pgf@y = -\pgf@y
+    }
+    \anchor{northeast}{
+        \northeast
+        \pgf@y = \pgf@y
+    }
+    \anchor{near northeast}{
+        \northeast
+        \pgf@y = 0.7\pgf@y
+    }
+    \anchor{far northeast}{
+        \northeast
+        \pgf@y = 0.7\pgf@y
+        \pgf@x = 1.2\pgf@x
+    }
+    \anchor{tube northeast}{
+        \northeast
+        \pgf@y = 0.6\pgf@y
+    }
+    \anchor{semi-tube northeast}{
+        \northeast
+        \pgf@ya = \pgf@y
+        \pgf@y = 0.6\pgf@ya
+        \pgf@x = 1.24\pgf@x
+    }
+    \anchor{full-tube northeast}{
+        \northeast
+        \pgf@ya = \pgf@y
+        \pgf@y = 0.6\pgf@ya
+        \pgf@x = 1.48\pgf@x
+    }
+    \anchor{northwest}{
+        \northeast
+        \pgf@y = \pgf@y
+        \pgf@x = -\pgf@x
+    }
+    \anchor{near northwest}{
+        \northeast
+        \pgf@y = 0.7\pgf@y
+        \pgf@x = -\pgf@x
+    }
+    \anchor{far northwest}{
+        \northeast
+        \pgf@y = 0.7\pgf@y
+        \pgf@x = -1.2\pgf@x
+    }
+    \anchor{tube northwest}{
+        \northeast
+        \pgf@ya = \pgf@y
+        \pgf@y = 0.18\pgf@ya
+        \pgf@x = -1\pgf@x
+    }
+    \anchor{semi-tube northwest}{
+        \northeast
+        \pgf@ya = \pgf@y
+        \pgf@y = 0.18\pgf@ya
+        \pgf@x = -1.24\pgf@x
+    }
+    \anchor{full-tube northwest}{
+        \northeast
+        \pgf@ya = \pgf@y
+        \pgf@y = 0.18\pgf@ya
+        \pgf@x = -1.48\pgf@x
+    }
+    \anchor{southeast}{
+        \northeast
+        \pgf@y = -\pgf@y
+    }
+    \anchor{near southeast}{
+        \northeast
+        \pgf@y = -0.7\pgf@y
+    }
+    \anchor{far southeast}{
+        \northeast
+        \pgf@y = -0.7\pgf@y
+        \pgf@x = 1.2\pgf@x
+    }
+    \anchor{tube southeast}{
+        \northeast
+        \pgf@ya = \pgf@y
+        \pgf@y = -0.18\pgf@ya
+        \pgf@x = \pgf@x
+    }
+    \anchor{semi-tube southeast}{
+        \northeast
+        \pgf@ya = \pgf@y
+        \pgf@y = -0.18\pgf@ya
+        \pgf@x = 1.24\pgf@x
+    }
+    \anchor{full-tube southeast}{
+        \northeast
+        \pgf@ya = \pgf@y
+        \pgf@y = -0.18\pgf@ya
+        \pgf@x = 1.48\pgf@x
+    }
+    \anchor{southwest}{
+        \northeast
+        \pgf@y = -\pgf@y
+        \pgf@x = -\pgf@x
+    }
+    \anchor{near southwest}{
+        \northeast
+        \pgf@y = -0.7\pgf@y
+        \pgf@x = -\pgf@x
+    }
+    \anchor{far southwest}{
+        \northeast
+        \pgf@y = -0.7\pgf@y
+        \pgf@x = -1.2\pgf@x
+    }
+    \anchor{tube southwest}{
+        \northeast
+        \pgf@y = -0.6\pgf@y
+        \pgf@x = -\pgf@x
+    }
+    \anchor{semi-tube southwest}{
+        \northeast
+        \pgf@ya = \pgf@y
+        \pgf@y = -0.6\pgf@ya
+        \pgf@x = -1.24\pgf@x
+    }
+    \anchor{full-tube southwest}{
+        \northeast
+        \pgf@ya = \pgf@y
+        \pgf@y = -0.6\pgf@ya
+        \pgf@x = -1.48\pgf@x
+    }
+    
+
+    \backgroundpath{
+        \northeast
+        \pgf@ya = \pgf@y 
+
+        \east
+        \pgf@xa = \pgf@x
+
+        \pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@ya}}
+        \pgfpathlineto{\pgfpoint{\pgf@xa}{-\pgf@ya}}
+        \pgfpathlineto{\pgfpoint{-\pgf@xa}{-\pgf@ya}}
+        \pgfpathlineto{\pgfpoint{-\pgf@xa}{\pgf@ya}}
+        \pgfpathclose
+
+        \pgfusepath{stroke}
+
+        \pgfkeys{/tank/draw}
+        \pgfkeys{/agitator/draw}
+    }
+   
+}
+
+\pgfdeclareshape{dished tank}{
+    \savedanchor{\centerpoint}{\pgfpointorigin}
+    \savedanchor{\east}{\pgfpointscale{0.5}{\pgfpoint{\pgfkeysvalueof{/tank/dimension/width}}{0}}}
+    \savedanchor{\north}{
+        \pgfpointscale{0.5}{\pgfpoint{0}{\pgfkeysvalueof{/tank/dimension/height} + \pgfkeysvalueof{/tank/dimension/radius dish}}}
+        \pgf@y = 1.09 \pgf@y
+    }
+    \savedanchor{\northeast}{
+        \pgfpointscale{0.5}{\pgfpoint{\pgfkeysvalueof{/tank/dimension/width}}{\pgfkeysvalueof{/tank/dimension/height}}}
+    }
+    \savedanchor{\innerleg}{
+        \pgfpoint{0.375*\pgfkeysvalueof{/tank/dimension/width}}{0.565*\pgfkeysvalueof{/tank/dimension/height}}
+    }
+
+    \anchor{center}{\centerpoint}
+    \anchor{east}{
+        \east
+    }
+    \anchor{far east}{
+        \east
+        \pgf@x = 1.2\pgf@x
+    }
+    \anchor{west}{
+        \east
+        \pgf@x = -\pgf@x
+    }
+    \anchor{far west}{
+        \east
+        \pgf@x = -1.2 \pgf@x
+    }
+    \anchor{north}{
+        \north
+    }
+    \anchor{south}{
+        \north
+        \pgf@y = -\pgf@y
+    }
+    \anchor{northeast}{
+        \northeast
+        \pgf@y = \pgf@y
+    }
+    \anchor{near northeast}{
+        \northeast
+        \pgf@y = 0.7\pgf@y
+    }
+    \anchor{far northeast}{
+        \northeast
+        \pgf@y = 0.7\pgf@y
+        \pgf@x = 1.2\pgf@x
+    }
+    \anchor{tube northeast}{
+        \northeast
+        \pgf@y = 0.6\pgf@y
+    }
+    \anchor{semi-tube northeast}{
+        \northeast
+        \pgf@ya = \pgf@y
+        \pgf@y = 0.6\pgf@ya
+        \pgf@x = 1.24\pgf@x
+    }
+    \anchor{full-tube northeast}{
+        \northeast
+        \pgf@ya = \pgf@y
+        \pgf@y = 0.6\pgf@ya
+        \pgf@x = 1.48\pgf@x
+    }
+    \anchor{northwest}{
+        \northeast
+        \pgf@y = \pgf@y
+        \pgf@x = -\pgf@x
+    }
+    \anchor{near northwest}{
+        \northeast
+        \pgf@y = 0.7\pgf@y
+        \pgf@x = -\pgf@x
+    }
+    \anchor{far northwest}{
+        \northeast
+        \pgf@y = 0.7\pgf@y
+        \pgf@x = -1.2\pgf@x
+    }
+    \anchor{tube northwest}{
+        \northeast
+        \pgf@ya = \pgf@y
+        \pgf@y = 0.18\pgf@ya
+        \pgf@x = -1\pgf@x
+    }
+    \anchor{semi-tube northwest}{
+        \northeast
+        \pgf@ya = \pgf@y
+        \pgf@y = 0.18\pgf@ya
+        \pgf@x = -1.24\pgf@x
+    }
+    \anchor{full-tube northwest}{
+        \northeast
+        \pgf@ya = \pgf@y
+        \pgf@y = 0.18\pgf@ya
+        \pgf@x = -1.48\pgf@x
+    }
+    \anchor{southeast}{
+        \northeast
+        \pgf@y = -\pgf@y
+    }
+    \anchor{near southeast}{
+        \northeast
+        \pgf@y = -0.7\pgf@y
+    }
+    \anchor{far southeast}{
+        \northeast
+        \pgf@y = -0.7\pgf@y
+        \pgf@x = 1.2\pgf@x
+    }
+    \anchor{tube southeast}{
+        \northeast
+        \pgf@ya = \pgf@y
+        \pgf@y = -0.18\pgf@ya
+        \pgf@x = \pgf@x
+    }
+    \anchor{semi-tube southeast}{
+        \northeast
+        \pgf@ya = \pgf@y
+        \pgf@y = -0.18\pgf@ya
+        \pgf@x = 1.24\pgf@x
+    }
+    \anchor{full-tube southeast}{
+        \northeast
+        \pgf@ya = \pgf@y
+        \pgf@y = -0.18\pgf@ya
+        \pgf@x = 1.48\pgf@x
+    }
+    \anchor{southwest}{
+        \northeast
+        \pgf@y = -\pgf@y
+        \pgf@x = -\pgf@x
+    }
+    \anchor{near southwest}{
+        \northeast
+        \pgf@y = -0.7\pgf@y
+        \pgf@x = -\pgf@x
+    }
+    \anchor{far southwest}{
+        \northeast
+        \pgf@y = -0.7\pgf@y
+        \pgf@x = -1.2\pgf@x
+    }
+    \anchor{tube southwest}{
+        \northeast
+        \pgf@y = -0.6\pgf@y
+        \pgf@x = -\pgf@x
+    }
+    \anchor{semi-tube southwest}{
+        \northeast
+        \pgf@ya = \pgf@y
+        \pgf@y = -0.6\pgf@ya
+        \pgf@x = -1.24\pgf@x
+    }
+    \anchor{full-tube southwest}{
+        \northeast
+        \pgf@ya = \pgf@y
+        \pgf@y = -0.6\pgf@ya
+        \pgf@x = -1.48\pgf@x
+    }
+
+    \backgroundpath{
+        \northeast
+        \pgf@xa = \pgf@x
+        \pgf@ya = \pgf@y
+
+        \pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@ya}}
+        \pgfpathlineto{\pgfpoint{\pgf@xa}{-\pgf@ya}}
+        \pgfpatharc{360}{180}{\pgf@xa and \pgfkeysvalueof{/tank/dimension/radius dish}}
+        \pgfpathlineto{\pgfpoint{-\pgf@xa}{-\pgf@ya}}
+        \pgfpathlineto{\pgfpoint{-\pgf@xa}{\pgf@ya}}
+        \pgfpatharc{180}{0}{\pgf@xa and \pgfkeysvalueof{/tank/dimension/radius dish}}
+        \pgfpathclose
+
+        \pgfusepath{stroke}
+
+        \pgfkeys{/tank/draw}
+    }
+   
+}
+
+\pgfdeclareshape{vessel with pit}{
+    \savedanchor{\centerpoint}{
+        \pgfpointorigin
+    }
+    \savedanchor{\west}{
+        \pgfpointscale{0.5}{\pgfpoint{\pgfkeysvalueof{/vessel with pit/dimension/width}}{0}}
+        \pgf@x = -\pgf@x
+    }
+    \savedanchor{\southwest}{
+        \pgfpoint{
+            0.2*\pgfkeysvalueof{/vessel with pit/dimension/width}
+        }{
+            0.667*\pgfkeysvalueof{/vessel with pit/dimension/height dome} + 0.5*\pgfkeysvalueof{/vessel with pit/dimension/height}
+        }
+        \pgf@y = -\pgf@y
+        \pgf@x = -\pgf@x
+    }
+    \savedanchor{\pit}{
+        \pgfpoint{
+            0.1*\pgfkeysvalueof{/vessel with pit/dimension/width}
+        }{
+            \pgfkeysvalueof{/vessel with pit/dimension/height dome} + 0.5*\pgfkeysvalueof{/vessel with pit/dimension/height}
+        }
+        \pgf@y = -\pgf@y
+        \pgf@x = -\pgf@x
+    }
+    \savedanchor{\south}{
+        \pgfpointscale{0.5}{\pgfpoint{0}{\pgfkeysvalueof{/vessel with pit/dimension/height}}}
+        \pgf@y = -\pgf@y
+    }
+
+    \anchor{center}{
+        \centerpoint
+    }
+    \anchor{south}{
+        \south
+    }
+    \anchor{north}{
+        \south
+        \pgf@y = -\pgf@y
+    }
+    \anchor{west}{
+        \west
+    }
+    \anchor{east}{
+        \west
+        \pgf@x = -\pgf@x
+    }
+
+    \backgroundpath{
+        \south
+        \pgf@xa = \pgf@x
+        \pgf@ya = \pgf@y
+        \pgfpathmoveto{\pit}
+        \pgfpatharc{270}{310}{0.1556*\pgfkeysvalueof{/vessel with pit/dimension/width}}
+        \pgfpathlineto{\south}
+        \pgfpathmoveto{\pit}
+        \pgfpatharc{270}{230}{0.1556*\pgfkeysvalueof{/vessel with pit/dimension/width}}
+        \pgfpathlineto{
+            \southwest
+            \pgf@y = \pgf@ya
+        }
+        \pgfpathmoveto{\west}
+        \pgfpatharc{180}{220}{0.7779*\pgfkeysvalueof{/vessel with pit/dimension/height}}
+        \pgfpathlineto{
+            \southwest
+            \pgf@y = \pgf@ya
+        }
+        \pgfpathmoveto{\west}
+        \pgfpatharc{180}{140}{0.7779*\pgfkeysvalueof{/vessel with pit/dimension/height}}
+        \pgfpathlineto{
+            \south
+            \pgf@y = -\pgf@y
+        }
+        \pgfpathmoveto{
+            \west
+            \pgf@x = -\pgf@x
+        }
+        \pgfpatharc{0}{-40}{0.7779*\pgfkeysvalueof{/vessel with pit/dimension/height}}
+        \pgfpathlineto{\south}
+        \pgfpathmoveto{
+            \west
+            \pgf@x = -\pgf@x
+        }
+        \pgfpatharc{0}{40}{0.7779*\pgfkeysvalueof{/vessel with pit/dimension/height}}
+
+        \pgfpathlineto{
+            \south
+            \pgf@y = -\pgf@y
+        }
+        \pgfusepath{stroke}
+    }
+}

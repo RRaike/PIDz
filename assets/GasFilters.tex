@@ -1,0 +1,244 @@
+\pgfkeys{
+        /gas filter/dimension/height/.code = {#1},
+        /gas filter/dimension/height/.initial = {1.75 cm},
+        /gas filter/dimension/width/.code = {#1},
+        /gas filter/dimension/width/.initial = {1 cm},
+        /gas filter/.is choice,
+        /gas filter/basic/.code = {#1},
+        /gas filter/basic/.default = {},
+        /gas filter/bag/.code = {
+            \pgfkeys{/gas filter/basic/.append code = {
+                \pgfpointscale{0.4}{\north}
+                \pgf@ya = \pgf@y
+                
+                \pgfpointscale{0.4}{\east}
+                \pgf@xa = \pgf@x
+
+                \east
+                \pgfpathmoveto{\pgfpoint{-\pgf@x}{\pgf@ya}}
+                \pgfpathlineto{\pgfpoint{-\pgf@xa}{\pgf@ya}}
+                
+                \east
+                \pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@ya}}
+                \pgfpathlineto{\pgfpoint{\pgf@xa}{\pgf@ya}}
+
+                
+                \pgfusepath{stroke}
+
+                \pgfsetdash{{0.20 cm}{0.05 cm}}{0 cm}
+                
+                \pgfpointscale{0.4}{\north}
+                \pgf@ya = \pgf@y
+                
+                \pgfpointscale{0.4}{\east}
+                \pgf@xa = \pgf@x
+
+                \pgfpathmoveto{\pgfpoint{-\pgf@xa}{\pgf@ya}}
+                \pgfpathlineto{\pgfpoint{-\pgf@xa}{-\pgf@ya}}
+                \pgfpathlineto{\pgfpoint{\pgf@xa}{-\pgf@ya}}
+                \pgfpathlineto{\pgfpoint{\pgf@xa}{\pgf@ya}}
+
+                \pgfusepath{stroke}
+                \pgfsetdash{}{0pt}
+            }
+        }},
+        /gas filter/bed/.code = {
+            \pgfkeys{/gas filter/basic/.append code = {
+                \pgfsetdash{{0.20 cm}{0.20 cm}}{0 cm}
+                \pgfpointscale{0.4}{\north}
+                \pgf@ya = \pgf@y
+                
+                \east
+                \pgf@xa = \pgf@x
+
+                \pgfpathmoveto{\pgfpoint{-\pgf@xa}{\pgf@ya}}
+                \pgfpathlineto{\pgfpoint{\pgf@xa}{\pgf@ya}}
+                
+                \pgfpathmoveto{\pgfpoint{-\pgf@xa}{-\pgf@ya}}
+                \pgfpathlineto{\pgfpoint{\pgf@xa}{-\pgf@ya}}
+
+                \pgfusepath{stroke}
+                \pgfsetdash{}{0pt}
+
+                \pgfpointscale{0.4}{\north}
+                \pgf@ya = \pgf@y
+                
+                \east
+                \pgf@xa = \pgf@x
+
+                \pgfpathmoveto{\pgfpoint{-\pgf@xa}{\pgf@ya}}
+                \pgfpathlineto{\pgfpoint{\pgf@xa}{-\pgf@ya}}
+                \pgfpathmoveto{\pgfpoint{-\pgf@xa}{-\pgf@ya}}
+                \pgfpathlineto{\pgfpoint{\pgf@xa}{\pgf@ya}}
+
+                \pgfusepath{stroke}
+            }
+        }},
+        /gas filter/hepa/.code = {
+            \pgfkeys{/gas filter/basic/.append code = {
+                \pgftext[]{\tiny HEPA}
+                \pgfusepath{stroke}
+            }
+        }},
+        /gas filter/belt/.code = {
+            \pgfkeys{/gas filter/basic/.append code = {
+                \pgfpointscale{0.3}{\east}
+                \pgf@xa = \pgf@x
+
+                \east
+                \pgfpathmoveto{\pgfpoint{\pgf@x}{-\pgf@xa}}
+                \pgfpatharc{0}{360}{\pgf@xa}
+                \pgfpathclose
+
+                \east
+                \pgfpathmoveto{\pgfpoint{-\pgf@x}{-\pgf@xa}}
+                \pgfpatharc{180}{540}{\pgf@xa}
+                \pgfpathclose
+                
+                \pgfusepath{stroke}
+
+                \pgfpointscale{1 - 0.3}{\east}
+                \pgf@xb = \pgf@x
+
+                \pgfsetdash{{0.20 cm}{0.05 cm}}{0 cm}
+
+                \pgfpathmoveto{\pgfpoint{-\pgf@xb}{0}}
+                \pgfpathlineto{\pgfpoint{\pgf@xb}{0}}
+
+                \pgfpathmoveto{\pgfpoint{-\pgf@xb}{-2\pgf@xa}}
+                \pgfpathlineto{\pgfpoint{\pgf@xb}{-2\pgf@xa}}
+
+                \pgfusepath{stroke}
+                \pgfsetdash{}{0pt}
+            }
+        }},
+        /gas filter/.default = {\pgfkeys{/gas filter/basic}}
+}
+
+
+\pgfdeclareshape{gas filter}{
+    \savedanchor{\centerpoint}{
+        \pgfpointorigin
+    }
+    \savedanchor{\north}{
+        \pgfpointscale{0.5}{\pgfpoint{0}{\pgfkeysvalueof{/gas filter/dimension/height}}}
+    }
+    \savedanchor{\northeast}{
+        \pgfpointscale{0.5}{\pgfpoint{\pgfkeysvalueof{/gas filter/dimension/width}}{\pgfkeysvalueof{/gas filter/dimension/height}}}
+    }
+    \savedanchor{\east}{
+        \pgfpointscale{0.5}{\pgfpoint{\pgfkeysvalueof{/gas filter/dimension/width}}{0}}
+    }
+    
+    \anchor{center}{
+        \centerpoint
+    }
+    \anchor{north}{
+        \north
+    }
+    \anchor{east}{
+        \east
+    }
+    \anchor{south}{
+        \north
+        \pgf@y = -\pgf@y
+    }
+    \anchor{west}{
+        \east
+        \pgf@x = -\pgf@x
+    }
+    \anchor{northeast}{
+        \northeast
+        \pgf@y = 0.8\pgf@y
+    }
+    \anchor{near northeast}{
+        \northeast
+        \pgf@y = 0.4 \pgf@y
+    }
+    \anchor{far northeast}{
+        \northeast
+    }
+    \anchor{northwest}{
+        \northeast
+        \pgf@y = 0.8\pgf@y
+        \pgf@x = -\pgf@x
+    }
+    \anchor{near northwest}{
+        \northeast
+        \pgf@y = 0.4 \pgf@y
+        \pgf@x = -\pgf@x
+    }
+    \anchor{far northwest}{
+        \northeast
+        \pgf@x = -\pgf@x
+    }
+    \anchor{southeast}{
+        \northeast
+        \pgf@y = -0.8\pgf@y
+    }
+    \anchor{near southeast}{
+        \northeast
+        \pgf@y = -0.4\pgf@y
+    }
+    \anchor{far southeast}{
+        \northeast
+        \pgf@y = -\pgf@y
+    }
+    \anchor{southwest}{
+        \northeast
+        \pgf@y = -0.8\pgf@y
+        \pgf@x = -\pgf@x
+    }
+    \anchor{near southwest}{
+        \northeast
+        \pgf@y = -0.4\pgf@y
+        \pgf@x = -\pgf@x
+    }
+    \anchor{far southwest}{
+        \northeast
+        \pgf@y = -\pgf@y
+        \pgf@x = -\pgf@x
+    }
+
+    
+    \backgroundpath{
+        \northeast
+        \pgf@xa = \pgf@x
+        \pgf@ya = \pgf@y
+
+        \pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@ya}}     % Make box. Right top corner
+        \pgfpathlineto{\pgfpoint{\pgf@xa}{-\pgf@ya}}    % Right bottom corner
+        \pgfpathlineto{\pgfpoint{-\pgf@xa}{-\pgf@ya}}   % Left bottom corner
+        \pgfpathlineto{\pgfpoint{-\pgf@xa}{\pgf@ya}}    % Left top corner
+        \pgfpathclose                                   % Close box
+
+        \pgfusepath{stroke}                             % Draw box
+
+        \pgfsetdash{{0.20 cm}{0.20 cm}}{0 cm}           % Setup dashed line
+
+        \pgfpointscale{0.6}{\north}                 
+        \pgf@yb = \pgf@y
+
+        \east
+        \pgf@xa = \pgf@x
+
+        \pgfpathmoveto{\pgfpoint{-\pgf@xa}{\pgf@yb}}    % Top dashed line
+        \pgfpathlineto{\pgfpoint{\pgf@xa}{\pgf@yb}}
+
+        \pgfpointscale{0.4}{\north}
+        \pgf@yb = \pgf@y
+
+        \pgfpathmoveto{\pgfpoint{-\pgf@xa}{-\pgf@yb}}   % Left part of V.
+        \pgfpathlineto{\pgfpoint{0}{-\pgf@ya}}
+
+        \pgfpathmoveto{\pgfpoint{\pgf@xa}{-\pgf@yb}}   % Right part of V. Makes symmetrical dash
+        \pgfpathlineto{\pgfpoint{0}{-\pgf@ya}}
+
+        \pgfusepath{stroke}
+        \pgfsetdash{}{0pt}
+
+        \pgfkeys{/gas filter/basic}
+    
+        \pgfusepath{stroke}
+    }
+}

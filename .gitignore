@@ -1,0 +1,14 @@
+
+test.aux
+test.fdb_latexmk
+test.fls
+test.log
+test.pdf
+test.synctex.gz
+test.tex
+Documentation.aux
+Documentation.fdb_latexmk
+Documentation.fls
+Documentation.log
+Documentation.synctex.gz
+Documentation.toc

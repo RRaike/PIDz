@@ -1,0 +1,45 @@
+\definecolor{colorDefBoxBack}{RGB}{223, 242, 251}
+\definecolor{colorDefBoxFrame}{RGB}{63, 141, 177}
+\definecolor{colorExampleFrame}{RGB}{64, 64, 64}
+\definecolor{colorExampleBack}{RGB}{255, 255, 255}
+\definecolor{colorTheoremFrame}{RGB}{112, 173, 71}
+\definecolor{colorTheoremBack}{RGB}{223, 235, 230}
+
+\newenvironment{definition}[1][]{
+    \refstepcounter{countDef}
+    \par \vspace{10pt} \noindent
+    \begin{tcolorbox}[breakable, enhanced,
+    boxrule=0pt, colback= colorDefBoxBack, frame hidden, sharp corners, borderline west={3pt}{0pt}{colorDefBoxFrame}]
+    \textbf{Definition~\thecountDef. #1}
+    \\[2pt]
+    }{
+    \end{tcolorbox}
+    \vspace{-10pt}
+    \noindent
+}
+
+\newenvironment{example}[1][]{
+    \refstepcounter{countEx}
+    \par \vspace{10pt} \noindent
+    \begin{tcolorbox}[breakable, enhanced,
+    boxrule=0pt, colback= colorExampleBack, frame hidden, sharp corners, borderline west={1pt}{0pt}{colorExampleFrame}]
+    \textbf{Example~\thecountEx. #1}
+    \\[2pt]
+    }{
+    \end{tcolorbox}
+    \par
+    \noindent
+}
+
+\newenvironment{theorem}[1][]{
+    \refstepcounter{countTheorem}
+    \par \vspace{10pt} \noindent
+    \begin{tcolorbox}[breakable, enhanced,
+    boxrule=0pt, colback= colorTheoremBack, frame hidden, sharp corners, borderline west={3pt}{0pt}{colorTheoremFrame}]
+    \textbf{Theorem~\thecountTheorem. #1}
+    \\[2pt]
+    }{
+    \end{tcolorbox}
+    \par
+    \noindent
+}

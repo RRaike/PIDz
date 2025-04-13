@@ -1,0 +1,172 @@
+\pgfkeys{
+        /press/dimension/height/.code = {#1},
+        /press/dimension/height/.initial = {0.75 cm},
+        /press/dimension/width top/.code = {#1},
+        /press/dimension/width top/.initial = {0.75 cm},
+        /press/dimension/width bottom/.code = {#1},
+        /press/dimension/width bottom/.initial = {1.5 cm},
+        /press/.is choice,
+        /press/basic/.code = {#1},
+        /press/basic/.default = {},
+        /press/roller/.code = {
+            \pgfkeys{/press/basic/.append code = {
+                \pgfpointscale{0.5}{\north}
+                \pgf@ya = \pgf@y
+
+                \pgfpointscale{0.2}{\southeast}
+                \pgf@xa = \pgf@x
+                
+                \pgfpathmoveto{\pgfpoint{0}{\pgf@ya}}
+                \pgfpatharc{0}{360}{\pgf@xa}
+                \pgfpathclose
+                \pgfpatharc{180}{540}{\pgf@xa}
+                \pgfpathclose
+                
+                \pgfusepath{stroke}
+            }
+        }},
+        /press/piston/.code = {
+            \pgfkeys{/press/basic/.append code = {
+                \pgfpointscale{0.9}{\north}
+                \pgf@ya = \pgf@y
+
+                \pgfpointscale{0.5}{\north}
+                \pgf@yb = \pgf@y
+
+                \pgfpointscale{0.6}{\northeast}
+                \pgf@xa = \pgf@x
+                
+                \pgfpathmoveto{\pgfpoint{0}{\pgf@ya}}
+                \pgfpathlineto{\pgfpoint{0}{\pgf@yb}}
+                
+                \pgfpathmoveto{\pgfpoint{-\pgf@xa}{\pgf@yb}}
+                \pgfpathlineto{\pgfpoint{\pgf@xa}{\pgf@yb}}
+                
+                \pgfusepath{stroke}
+            }
+        }},
+        /press/pelletizing/.code = {
+            \pgfkeys{/press/basic/.append code = {
+                \pgfpointscale{0.5}{\north}
+                \pgf@ya = \pgf@y
+
+                \pgfpointscale{0.4}{\northeast}
+                \pgf@xa = \pgf@x
+                
+                \pgfpathcircle{\pgfpoint{0}{\pgf@ya}}{\pgf@xa}
+                \pgfusepath{stroke}
+            }
+        }},
+        /press/.default = {\pgfkeys{/pump/basic}}  
+}
+
+
+\pgfdeclareshape{press}{
+    \savedanchor{\centerpoint}{
+        \pgfpointorigin
+    }
+    \savedanchor{\north}{
+        \pgfpointscale{0.67}{\pgfpoint{0}{\pgfkeysvalueof{/press/dimension/height}}}
+    }
+    \savedanchor{\northeast}{
+        \pgfpointscale{0.67}{\pgfpoint{0}{\pgfkeysvalueof{/press/dimension/height}}}
+        \pgf@ya = \pgf@y
+        \pgfpointscale{0.5}{\pgfpoint{\pgfkeysvalueof{/press/dimension/width top}}{0}}
+        \pgf@y = \pgf@ya
+    }
+    \savedanchor{\southeast}{
+        \pgfpointscale{0.33}{\pgfpoint{0}{\pgfkeysvalueof{/press/dimension/height}}}
+        \pgf@ya = -\pgf@y
+        \pgfpointscale{0.5}{\pgfpoint{\pgfkeysvalueof{/press/dimension/width bottom}}{0}}
+        \pgf@y = \pgf@ya
+    }
+    
+    \anchor{center}{
+        \centerpoint
+    }
+    \anchor{north}{
+        \north
+    }
+    \anchor{east}{
+        \southeast
+        \pgfpointscale{0.84}{\pgfpoint{\pgf@x}{0}}
+    }
+    \anchor{west}{
+        \southeast
+        \pgfpointscale{0.84}{\pgfpoint{-\pgf@x}{0}}
+    }
+    \anchor{south}{
+        \southeast
+        \pgfpoint{0}{\pgf@y}
+    }
+    \anchor{northeast}{
+        \northeast
+    }
+    \anchor{near northeast}{
+        \northeast
+        \pgf@x = 1.33\pgf@x
+        \pgf@y = 0.5\pgf@y
+    }
+    \anchor{northwest}{
+        \northeast
+        \pgfpoint{-\pgf@x}{\pgf@y}
+    }
+    \anchor{near northwest}{
+        \northeast
+        \pgf@x = -1.33\pgf@x
+        \pgf@y = 0.5\pgf@y
+    }
+    \anchor{southeast}{
+        \southeast
+    }
+    \anchor{near southeast}{
+        \southeast
+        \pgf@x = 0.8\pgf@x
+    }
+    \anchor{southwest}{
+        \southeast
+        \pgfpoint{-\pgf@x}{\pgf@y}
+    }
+    \anchor{near southwest}{
+        \southeast
+        \pgf@x = -0.8\pgf@x
+    }
+
+    
+    \backgroundpath{
+        \pgfpathmoveto{\northeast}
+        \pgfpathlineto{\southeast}
+        \southeast
+        \pgfpathlineto{\pgfpoint{-\pgf@x}{\pgf@y}}
+        \northeast
+        \pgfpathlineto{\pgfpoint{-\pgf@x}{\pgf@y}}
+        \pgfpathclose
+
+        \pgfusepath{stroke, clip}
+
+        \southeast
+        
+        \southeast
+        \pgfpathmoveto{\pgfpoint{-\pgf@x}{0}}
+        \southeast
+        \pgfpathlineto{\pgfpoint{\pgf@x}{0}}
+
+        \pgfpointscale{0.6}{\southeast}
+        \pgf@xa = \pgf@x
+
+        \southeast
+        \pgf@ya = \pgf@y
+
+        \pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@ya}}
+        \pgfpathlineto{\pgfpoint{\pgf@xa}{0}}
+        
+        \pgfpathmoveto{\pgfpoint{-\pgf@xa}{\pgf@ya}}
+        \pgfpathlineto{\pgfpoint{-\pgf@xa}{0}}
+
+        \pgfusepath{stroke}
+        
+        \pgfkeys{/press/basic}
+    
+        \pgfusepath{stroke}
+    }
+}

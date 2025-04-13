@@ -1,0 +1,12 @@
+\newcommand\secref{Section~\ref}
+\newcommand\tabref{Table~\ref}
+\newcommand\figref{Figure~\ref}
+\newcommand\appref{Appendix~\ref}
+
+\newcommand\defref{Definition~\ref}
+\newcommand\exref{Example~\ref}
+\newcommand\theoryref{Theory~\ref}
+
+\usepackage{letltxmacro}
+\LetLtxMacro{\originaleqref}{\eqref}
+\renewcommand{\eqref}{Eq.~\originaleqref}

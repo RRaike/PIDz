@@ -1,0 +1,351 @@
+\pgfkeys{
+        /liquid filter/dimension/height/.code = {#1},
+        /liquid filter/dimension/height/.initial = {1.75 cm},
+        /liquid filter/dimension/width/.code = {#1},
+        /liquid filter/dimension/width/.initial = {1 cm},
+        /liquid filter/.is choice,
+        /liquid filter/basic/.code = {#1},
+        /liquid filter/basic/.default = {},
+        /liquid filter/helper/striped line/.code n args = {1}{
+            \pgfusepath{stroke}
+
+            \pgfpointscale{#1}{\north}
+            \pgf@ya = \pgf@y
+            
+            \east
+            \pgf@xa = \pgf@x
+
+            \pgfsetdash{{0.20 cm}{0.20 cm}}{0 cm}
+
+            \pgfpathmoveto{\pgfpoint{-\pgf@xa}{\pgf@ya}}
+            \pgfpathlineto{\pgfpoint{\pgf@xa}{\pgf@ya}}
+
+            \pgfusepath{stroke}
+
+            \pgfsetdash{}{0pt}
+        },
+        /liquid filter/helper/striped line/.default = {0},
+        /liquid filter/general/.code = {
+            \pgfkeys{/liquid filter/basic/.append code = {
+                \pgfkeys{/liquid filter/helper/striped line = {0}}
+            }
+        }},
+        /liquid filter/bag/.code = {
+            \pgfkeys{/liquid filter/basic/.append code = {
+                \pgfkeys{/liquid filter/helper/striped line = {0.6}}
+                \pgfkeys{/liquid filter/helper/striped line = {-0.6}}
+
+                \pgfpointscale{0.3}{\east}
+                \pgf@xa = \pgf@x
+
+                \east
+                \pgfpathmoveto{\pgfpoint{-\pgf@x}{0}}
+                \pgfpathlineto{\pgfpoint{-\pgf@xa}{0}}
+
+                \pgfpathmoveto{\east}
+                \pgfpathlineto{\pgfpoint{\pgf@xa}{0}}
+
+                \pgfusepath{stroke}
+
+                \pgfsetdash{{0.10 cm}{0.05 cm}}{0 cm}
+
+                \pgfpointscale{0.3}{\east}
+                \pgf@xa = \pgf@x
+                
+                \pgfpointscale{0.4}{\north}
+                \pgf@ya = \pgf@y
+            
+                \pgfpathmoveto{\pgfpoint{-\pgf@xa}{0}}
+                \pgfpathlineto{\pgfpoint{-\pgf@xa}{-\pgf@ya}}
+                \pgfpathlineto{\pgfpoint{\pgf@xa}{-\pgf@ya}}
+                \pgfpathlineto{\pgfpoint{\pgf@xa}{0}}
+
+                \pgfusepath{stroke} 
+                \pgfsetdash{}{0pt}
+            }
+        }},
+        /liquid filter/bed/.code = {
+            \pgfkeys{/liquid filter/basic/.append code = {
+                \pgfkeys{/liquid filter/helper/striped line = {0.6}}
+                \pgfkeys{/liquid filter/helper/striped line = {-0.6}}
+                
+                \east
+                \pgf@xa = \pgf@x
+
+                \pgfpointscale{0.6}{\north}
+                \pgf@ya = \pgf@y
+
+                \pgfpathmoveto{\pgfpoint{-\pgf@xa}{\pgf@ya}}
+                \pgfpathlineto{\pgfpoint{\pgf@xa}{-\pgf@ya}}
+
+                \pgfpathmoveto{\pgfpoint{-\pgf@xa}{-\pgf@ya}}
+                \pgfpathlineto{\pgfpoint{\pgf@xa}{\pgf@ya}}
+
+                \pgfusepath{stroke}
+            }
+        }},
+        /liquid filter/suction/.code = {
+            \pgfkeys{/liquid filter/basic/.append code = {
+                \pgfusepath{stroke}
+
+                \pgfpointscale{-0.5}{\north}
+                \pgf@ya = \pgf@y
+                
+                \east
+                \pgf@xa = \pgf@x
+
+                \pgfsetdash{{0.20 cm}{0.05 cm}}{0.1 cm}
+
+                \pgfpathmoveto{\pgfpoint{-\pgf@xa}{\pgf@ya}}
+                \pgfpathlineto{\pgfpoint{\pgf@xa}{\pgf@ya}}
+
+                \pgfusepath{stroke}
+
+                \pgfsetdash{}{0pt}
+                }
+        }},
+        /liquid filter/rotary/.code = {
+            \pgfkeys{/liquid filter/basic/.append code = {
+                \pgfkeys{/liquid filter/helper/striped line = {0.6}}
+                \pgfkeys{/liquid filter/helper/striped line = {-0.6}}
+
+                \pgfsetdash{{0.2 cm}{0.05 cm}}{0 cm}
+
+                \pgfpointscale{0.25}{\north}
+                \pgf@yb = \pgf@y
+
+                \pgfpathcircle{\centerpoint}{\pgf@yb}
+
+                \pgfusepath{stroke} 
+                \pgfsetdash{}{0pt}
+
+                \pgfpointscale{0.4}{\north}
+                \pgf@ya = \pgf@y
+
+                \pgfpathmoveto{\pgfpointpolar{45}{\pgf@ya}}
+                \pgfpatharc{45}{135}{\pgf@ya}
+
+                \pgfusepath{stroke}
+            }
+        }},
+        /liquid filter/rotary with scraper/.code = {
+            \pgfkeys{/liquid filter/basic/.append code = {
+                \pgfkeys{/liquid filter/helper/striped line = {0.6}}
+                \pgfkeys{/liquid filter/helper/striped line = {-0.6}}
+
+                \pgfsetdash{{0.2 cm}{0.05 cm}}{0 cm}
+
+                \pgfpointscale{0.25}{\north}
+                \pgf@yb = \pgf@y
+
+                \pgfpathcircle{\pgfpoint{-\pgf@yb}{0}}{\pgf@yb}
+
+                \pgfusepath{stroke} 
+                \pgfsetdash{}{0pt}
+
+                \pgfpointscale{0.4}{\north}
+                \pgf@ya = \pgf@y
+
+                \pgfpathmoveto{\pgfpoint{\pgf@yb}{\pgf@ya}}
+                \pgfpatharc{90}{45}{\pgf@ya}
+                
+                \pgfpathmoveto{\pgfpoint{\pgf@yb}{\pgf@ya}}
+                \pgfpatharc{90}{135}{\pgf@ya}
+
+                \pgfpathmoveto{\centerpoint}
+                \pgfpathlineto{\pgfpoint{-\pgf@yb}{\pgf@yb}}
+
+                
+                \pgfpathmoveto{\centerpoint}
+                \pgfpathlineto{\pgfpoint{0}{\pgf@yb}}
+                \east
+                \pgfpathlineto{\pgfpoint{1.3 \pgf@x}{\pgf@yb}}
+
+                \pgfusepath{stroke}
+            }
+        }},
+        /liquid filter/belt/.code = {
+            \pgfkeys{/liquid filter/basic/.append code = {
+                \pgfkeys{/liquid filter/helper/striped line = {0.6}}
+                \pgfkeys{/liquid filter/helper/striped line = {-0.6}}
+                
+                \pgfpointscale{0.3}{\east}
+                \pgf@xa = \pgf@x
+
+                \pgfpointscale{1 - 0.3}{\east}
+                \pgf@xb = \pgf@x
+
+                \pgfpathmoveto{\pgfpoint{\pgf@xb}{0}}
+                \pgfpatharc{90}{450}{\pgf@xa}
+                \pgfpathclose
+
+                \pgfpathmoveto{\pgfpoint{-\pgf@xb}{0}}
+                \pgfpatharc{90}{450}{\pgf@xa}
+                \pgfpathclose
+
+                \pgfusepath{stroke}
+                
+                \pgfsetdash{{0.2 cm}{0.05 cm}}{0 cm}
+                \pgfpathmoveto{\pgfpoint{\pgf@xb}{0}}
+                \pgfpathlineto{\pgfpoint{-\pgf@xb}{0}}
+
+                
+                \pgfpathmoveto{\pgfpoint{\pgf@xb}{-2 \pgf@xa}}
+                \pgfpathlineto{\pgfpoint{-\pgf@xb}{-2 \pgf@xa}}
+                \pgfusepath{stroke}
+                \pgfsetdash{}{0pt}
+            }
+        }},
+        /liquid filter/press/.code = {
+            \pgfkeys{/liquid filter/basic/.append code = {
+                \pgfusepath{stroke}
+
+                \pgfsetdash{{0.20 cm}{0.1 cm}}{0 cm}
+
+                \foreach \j in {-0.6, -0.2, 0.2, 0.6} {
+                    \pgfpointscale{\j}{\north}
+                    \pgf@ya = \pgf@y
+
+                    \east
+                    \pgfpathmoveto{\pgfpoint{-\pgf@x}{\pgf@ya}}
+                    \east
+                    \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@ya}}
+                }
+                \pgfusepath{stroke}
+                \pgfsetdash{}{0pt}
+
+                \pgfpointscale{0.75}{\east}
+                \pgf@xa = \pgf@x
+
+                \foreach \j in {-0.8, -0.4, 0, 0.4, 0.8} {
+                    \pgfpointscale{\j}{\north}
+                    \pgf@ya = \pgf@y
+
+                    \pgfpathmoveto{\pgfpoint{-\pgf@xa}{\pgf@ya}}
+                    \pgfpathlineto{\pgfpoint{\pgf@xa}{\pgf@ya}}
+                }
+                \pgfusepath{stroke}
+            }
+        }},
+        /liquid filter/ion/.code = {
+            \pgfkeys{/liquid filter/basic/.append code = {
+                \pgfkeys{/liquid filter/helper/striped line = {0.6}}
+                \pgfkeys{/liquid filter/helper/striped line = {-0.6}}
+
+                \pgftext[]{\tiny ION}
+                \pgfusepath{stroke}
+            }
+        }},
+        /liquid filter/bio/.code = {
+            \pgfkeys{/liquid filter/basic/.append code = {
+                \pgfkeys{/liquid filter/helper/striped line = {0.6}}
+                \pgfkeys{/liquid filter/helper/striped line = {-0.6}}
+
+                \pgftext[]{\tiny BIO}
+                \pgfusepath{stroke}
+            }
+        }},
+        /liquid filter/.default = {\pgfkeys{/liquid filter/basic}}
+}
+
+
+\pgfdeclareshape{liquid filter}{
+    \savedanchor{\centerpoint}{
+        \pgfpointorigin
+    }
+    \savedanchor{\north}{
+        \pgfpointscale{0.5}{\pgfpoint{0}{\pgfkeysvalueof{/liquid filter/dimension/height}}}
+    }
+    \savedanchor{\northeast}{
+        \pgfpointscale{0.5}{\pgfpoint{\pgfkeysvalueof{/liquid filter/dimension/width}}{\pgfkeysvalueof{/liquid filter/dimension/height}}}
+    }
+    \savedanchor{\east}{
+        \pgfpointscale{0.5}{\pgfpoint{\pgfkeysvalueof{/liquid filter/dimension/width}}{0}}
+    }
+    
+    \anchor{center}{
+        \centerpoint
+    }
+    \anchor{north}{
+        \north
+    }
+    \anchor{east}{
+        \east
+    }
+    \anchor{south}{
+        \north
+        \pgf@y = -\pgf@y
+    }
+    \anchor{west}{
+        \east
+        \pgf@x = -\pgf@x
+    }
+    \anchor{northeast}{
+        \northeast
+        \pgf@y = 0.8\pgf@y
+    }
+    \anchor{near northeast}{
+        \northeast
+        \pgf@y = 0.4 \pgf@y
+    }
+    \anchor{far northeast}{
+        \northeast
+    }
+    \anchor{northwest}{
+        \northeast
+        \pgf@y = 0.8\pgf@y
+        \pgf@x = -\pgf@x
+    }
+    \anchor{near northwest}{
+        \northeast
+        \pgf@y = 0.4 \pgf@y
+        \pgf@x = -\pgf@x
+    }
+    \anchor{far northwest}{
+        \northeast
+        \pgf@x = -\pgf@x
+    }
+    \anchor{southeast}{
+        \northeast
+        \pgf@y = -0.8\pgf@y
+    }
+    \anchor{near southeast}{
+        \northeast
+        \pgf@y = -0.4\pgf@y
+    }
+    \anchor{far southeast}{
+        \northeast
+        \pgf@y = -\pgf@y
+    }
+    \anchor{southwest}{
+        \northeast
+        \pgf@y = -0.8\pgf@y
+        \pgf@x = -\pgf@x
+    }
+    \anchor{near southwest}{
+        \northeast
+        \pgf@y = -0.4\pgf@y
+        \pgf@x = -\pgf@x
+    }
+    \anchor{far southwest}{
+        \northeast
+        \pgf@y = -\pgf@y
+        \pgf@x = -\pgf@x
+    }
+
+    
+    \backgroundpath{
+        \pgfpathmoveto{\northeast}
+        \northeast
+        \pgfpathlineto{\pgfpoint{\pgf@x}{-\pgf@y}}
+        \northeast
+        \pgfpathlineto{\pgfpoint{-\pgf@x}{-\pgf@y}}
+        \northeast
+        \pgfpathlineto{\pgfpoint{-\pgf@x}{\pgf@y}}
+        \pgfpathclose
+        
+        \pgfkeys{/liquid filter/basic}
+    
+        \pgfusepath{stroke}
+    }
+}

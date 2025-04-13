@@ -1,0 +1,251 @@
+\pgfkeys{
+        /valve/dimension/width/.code = {{#1}},
+        /valve/dimension/width/.initial = {0.5 cm},
+        /valve/.is choice,
+        /valve/basic/.code = {
+            \pgfkeys{/valve/draw/.append code = {
+            \east
+            \pgf@xa = \pgf@x
+
+            \pgfpathmoveto{\centerpoint}
+            \pgfpathlineto{\pgfpoint{\pgf@xa}{-0.5\pgf@xa}}
+            \pgfpathlineto{\pgfpoint{\pgf@xa}{0.5\pgf@xa}}
+            \pgfpathclose
+            
+            \pgfusepath{stroke}
+            }
+        }},
+        /valve/angle/.code = {
+            \pgfkeys{/valve/draw/.append code = {
+            \east
+            \pgf@xa = \pgf@x
+
+            \pgfpathmoveto{\centerpoint}
+            \pgfpathlineto{\pgfpoint{-0.5 \pgf@xa}{-\pgf@xa}}
+            \pgfpathlineto{\pgfpoint{0.5 \pgf@xa}{-\pgf@xa}}
+            \pgfpathclose
+            
+            \pgfusepath{stroke}
+            }
+        }},
+        /valve/three way/.code = {
+            \pgfkeys{/valve/basic}
+            \pgfkeys{/valve/angle}
+        },
+        /valve/globe/.code = {
+            \pgfkeys{/valve/draw/.append code = {
+                \pgfpointscale{0.25}{\east}
+                \pgf@xa = \pgf@x
+
+                \pgfpathcircle{\centerpoint}{\pgf@xa}
+                \pgfusepath{fill, stroke}
+            }
+        }},
+        /valve/ball/.code = {
+            \pgfkeys{/valve/draw/.append code = {
+                \pgfsetfillcolor{white}
+                \pgfpointscale{0.25}{\east}
+                \pgf@xa = \pgf@x
+
+                \pgfpathcircle{\centerpoint}{\pgf@xa}
+                \pgfusepath{fill, stroke}
+                \pgfsetfillcolor{black}
+            }
+        }},
+        /valve/gate/.code = {
+            \pgfkeys{/valve/draw/.append code = {
+                \pgfpointscale{0.5}{\east}
+                \pgf@xa = \pgf@x
+
+                \pgfpathmoveto{\pgfpoint{0}{-\pgf@xa}}
+                \pgfpathlineto{\pgfpoint{0}{\pgf@xa}}
+                \pgfusepath{stroke}
+            }
+        }},
+        /valve/butterfly/.code = {
+            \pgfkeys{/valve/globe}
+            \pgfkeys{/valve/gate}
+        },
+        /valve/needle/.code = {
+            \pgfkeys{/valve/draw/.append code = {
+                \pgfpointscale{0.1}{\east}
+                \pgf@xa = \pgf@x
+
+                \pgfpointscale{0.5}{\east}
+                \pgf@ya = \pgf@x
+
+                \pgfpathmoveto{\centerpoint}
+                \pgfpathlineto{\pgfpoint{-\pgf@xa}{\pgf@ya}}
+                \pgfpathlineto{\pgfpoint{\pgf@xa}{\pgf@ya}}
+                \pgfpathclose
+                \pgfusepath{fill, stroke}
+            }
+        }},
+        /valve/continuous/.code = {
+            \pgfkeys{/valve/basic}
+            \pgfkeys{/valve/draw/.append code = {
+                \east
+                \pgf@xa = \pgf@x
+
+                \pgfpathmoveto{\pgfpoint{-1.6 \pgf@xa}{-0.8 \pgf@xa}}
+                \pgfpathlineto{\pgfpoint{1.6 \pgf@xa}{0.8  \pgf@xa}}
+                \pgfsetarrowsend{Latex[length=4pt, width = 2pt]}
+                \pgfusepath{stroke}
+            }
+        }},
+        /valve/check/.code = {
+            \pgfkeys{/valve/draw/.append code = {
+                \pgfpointscale{0.25}{\east}
+                \pgf@xa = \pgf@x
+
+                \east
+                \pgf@xb = \pgf@x
+
+                \pgfpathcircle{\pgfpoint{-\pgf@xb}{0.5 \pgf@xb}}{\pgf@xa}
+
+                \pgfusepath{fill, stroke}
+            }
+        }},
+        /valve/spring loaded/.code = {
+            \pgfkeys{/valve/draw/.append code = {
+                \pgfpointscale{0.4}{\east}
+                \pgf@xa = \pgf@x
+
+                \pgfpathmoveto{\centerpoint}
+                \pgfpathlineto{\pgfpoint{0}{\pgf@xa}}
+            
+                \pgfpathlineto{\pgfpoint{-\pgf@xa}{1.5 \pgf@xa}}
+                \pgfpathlineto{\pgfpoint{\pgf@xa}{2.5 \pgf@xa}}
+                \pgfpathlineto{\pgfpoint{-\pgf@xa}{3.5 \pgf@xa}}
+                \pgfpathlineto{\pgfpoint{\pgf@xa}{4.5 \pgf@xa}}
+
+                \pgfpathlineto{\pgfpoint{0}{5 \pgf@xa}}
+                \pgfpathlineto{\pgfpoint{0}{5.5 \pgf@xa}}
+
+                \pgfusepath{stroke}
+            }
+        }},
+        /valve/safety/.code = {
+            \pgfkeys{/valve/draw/.append code = {
+                \pgfpointscale{0.5}{\east}
+                \pgf@xa = \pgf@x
+                
+                \pgfsetlinewidth{4 \pgflinewidth}
+                \pgfpathmoveto{\pgfpoint{-\pgf@xa}{-\pgf@xa}}
+                \pgfpathlineto{\pgfpoint{-\pgf@xa}{\pgf@xa}}
+
+                \pgfusepath{stroke}
+                \pgfsetlinewidth{0.25 \pgflinewidth}
+            }
+        }},
+        /valve/breather/.code = {
+            \pgfkeys{/valve/basic}
+            \pgfkeys{/valve/draw/.append code = {
+                \pgfpointscale{0.25}{\east}
+                \pgf@xa = \pgf@x
+
+                \east
+                \pgf@xb = \pgf@x
+
+                \pgfpathcircle{\pgfpoint{-\pgf@xb}{0.5 \pgf@xb}}{\pgf@xa}
+
+                \pgfpointscale{0.25}{\east}
+                \pgf@xa = \pgf@x
+
+                \east
+                \pgf@xb = \pgf@x
+
+                \pgfpathcircle{\pgfpoint{\pgf@xb}{-0.5 \pgf@xb}}{\pgf@xa}
+
+                \pgfusepath{fill, stroke}
+            }
+        }},
+        /valve/draw/.code = {},
+        /valve/.default = {\pgfkeys{/valve/basic}}
+}
+
+\pgfdeclareshape{valve}{
+    \savedanchor{\centerpoint}{
+        \pgfpointorigin
+    }
+    \savedanchor{\east}{
+        \pgfpoint{\pgfkeysvalueof{/valve/dimension/width}}{0}
+        \pgfpointscale{0.5}{\pgfpoint{\pgf@x}{\pgf@y}}
+    }
+    
+    \anchor{center}{
+        \centerpoint
+    }
+    \anchor{east}{
+        \east
+    }
+    \anchor{west}{
+        \east
+        \pgfpoint{-\pgf@x}{\pgf@y}
+    }
+    \anchor{near north}{
+        \east
+        \pgf@xa = 0.25\pgf@x
+        \pgfpoint{0}{\pgf@xa}
+    }
+    \anchor{north}{
+        \east
+        \pgf@xa = 0.5\pgf@x
+        \pgfpoint{0}{\pgf@xa}
+    }
+    \anchor{far north}{
+        \east
+        \pgf@xa = \pgf@x
+        \pgfpoint{0}{\pgf@xa}
+    }
+    \anchor{near south}{
+        \east
+        \pgf@xa = 0.25\pgf@x
+        \pgfpoint{0}{-\pgf@xa}
+    }
+    \anchor{south}{
+        \east
+        \pgf@xa = 0.5\pgf@x
+        \pgfpoint{0}{-\pgf@xa}
+    }
+    \anchor{far south}{
+        \east
+        \pgf@xa = \pgf@x
+        \pgfpoint{0}{-\pgf@xa}
+    }
+    \anchor{northeast}{
+        \east
+        \pgf@xa = 0.5\pgf@x
+        \pgfpoint{\pgf@x}{\pgf@xa}
+    }
+    \anchor{northwest}{
+        \east
+        \pgf@xa = 0.5\pgf@x
+        \pgfpoint{-\pgf@x}{\pgf@xa}
+    }
+    \anchor{southeast}{
+        \east
+        \pgf@xa = 0.5\pgf@x
+        \pgfpoint{\pgf@x}{-\pgf@xa}
+    }
+    \anchor{southwest}{
+        \east
+        \pgf@xa = 0.5\pgf@x
+        \pgfpoint{-\pgf@x}{-\pgf@xa}
+    }
+    
+    \backgroundpath{
+        \east
+        \pgf@xa = \pgf@x
+
+        \pgfpathmoveto{\pgfpointorigin}
+
+        \pgfpathlineto{\pgfpoint{-\pgf@xa}{-0.5\pgf@xa}}
+        \pgfpathlineto{\pgfpoint{-\pgf@xa}{0.5\pgf@xa}}
+        \pgfpathclose
+        
+        \pgfusepath{stroke}
+        
+        \pgfkeys{/valve/draw}
+    }
+}

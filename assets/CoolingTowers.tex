@@ -1,0 +1,211 @@
+\pgfkeys{
+    /cooling tower/dimension/height bottom/.code = {#1},
+    /cooling tower/dimension/height bottom/.initial = 0.5 cm,
+    /cooling tower/dimension/height top/.code = {#1},
+    /cooling tower/dimension/height top/.initial = 2 cm,
+    /cooling tower/dimension/width bottom/.code = {#1},
+    /cooling tower/dimension/width bottom/.initial = 2cm,
+    /cooling tower/dimension/width top/.code = {#1},
+    /cooling tower/dimension/width top/.initial = 0.5 cm,
+    /cooling tower/dimension/test/.initial = 0.2,
+    /cooling tower/.is choice,
+    /cooling tower/basic/.code = {#1},
+    /cooling tower/basic/.initial = {},
+    /cooling tower/dry/.code = {
+        \pgfkeys{/cooling tower/basic/.append code = {  
+            \east
+            \pgfpathmoveto{\east}
+            \east
+            \pgfpathlineto{\pgfpoint{-\pgf@x}{\pgf@y}}
+    
+            \foreach \j in {-0.75, -0.5, -0.25, 0, 0.25, 0.5, 0.75} {
+            
+                \east
+                \pgfpointscale{\j}{\pgfpoint{\pgf@x}{0}}
+                \pgf@xa = \pgf@x
+                \east
+                \pgfpathmoveto{\pgfpoint{\pgf@xa}{1.5 \pgf@y}}
+                \east
+                \pgfpathlineto{\pgfpoint{\pgf@xa}{0.5 \pgf@y}}
+            }
+        }
+    }},
+    /cooling tower/forced draught/.code = {
+        \pgfkeys{/cooling tower/basic/.append code = {
+            \north
+            \pgf@ya = 0.2 \pgf@y
+            \pgf@yb = 0.1 \pgf@y
+
+            \pgfpathcircle{\pgfpoint{0}{\pgf@ya}}{\pgf@yb}
+            
+            \north
+            \pgf@ya = 0.2 \pgf@y
+
+            \pgfpointscale{1 + 0.1/0.2 * 0.94}{\pgfpoint{0}{\pgf@ya}}
+            \pgf@yb = \pgf@y
+            \pgfpointscale{0.1/0.2 *0.342}{\pgfpoint{\pgf@ya}{0}}
+            \pgf@xa = \pgf@x
+
+            
+            \pgfpointscale{1 + 0.1/0.2 * (-0.5)}{\pgfpoint{0}{\pgf@ya}}
+            \pgf@yc = \pgf@y
+            \pgfpointscale{0.1/0.2 *0.866}{\pgfpoint{\pgf@ya}{0}}
+            \pgf@xb = \pgf@x
+
+            \pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@yb}}
+            \pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@yc}}
+
+            \pgfpathmoveto{\pgfpoint{-\pgf@xa}{\pgf@yb}}
+            \pgfpathlineto{\pgfpoint{-\pgf@xb}{\pgf@yc}}
+        }
+    }},
+    /cooling tower/induced draught/.code = {
+        \pgfkeys{/cooling tower/basic/.append code = {
+            \north
+            \pgf@ya = 0.8 \pgf@y
+            \pgf@yb = 0.1 \pgf@y
+
+            \pgfpathcircle{\pgfpoint{0}{\pgf@ya}}{\pgf@yb}
+            
+            \north
+            \pgf@ya = 0.8 \pgf@y
+
+            \pgfpointscale{1 + 0.1/0.8 * 0.94}{\pgfpoint{0}{\pgf@ya}}
+            \pgf@yb = \pgf@y
+            \pgfpointscale{0.1/0.8 *0.342}{\pgfpoint{\pgf@ya}{0}}
+            \pgf@xa = \pgf@x
+
+            
+            \pgfpointscale{1 + 0.1/0.8 * (-0.5)}{\pgfpoint{0}{\pgf@ya}}
+            \pgf@yc = \pgf@y
+            \pgfpointscale{0.1/0.8 *0.866}{\pgfpoint{\pgf@ya}{0}}
+            \pgf@xb = \pgf@x
+
+            \pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@yb}}
+            \pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@yc}}
+
+            \pgfpathmoveto{\pgfpoint{-\pgf@xa}{\pgf@yb}}
+            \pgfpathlineto{\pgfpoint{-\pgf@xb}{\pgf@yc}}
+        }
+    }},
+    /cooling tower/wet/.code = {
+        \pgfkeys{/cooling tower/basic/.append code = {
+            \north
+            \pgf@ya = \pgf@y
+            \east
+            \pgf@xa = \pgf@x
+            \northeast
+            \pgf@xb = \pgf@x
+
+            \north
+            \pgf@yb = 0.5 \pgf@y
+
+            \pgfpoint{\pgf@yb/\pgf@ya * (\pgf@xb-\pgf@xa) + \pgf@xa}{\pgf@yb} % Couldn't make the internal intersection work, so did it myself with pen and paper
+            \pgfpathmoveto{\pgfpoint{-\pgf@x}{\pgf@y}}
+            \pgfpathlineto{\pgfpoint{0}{\pgf@yb}}
+
+            \north
+            \pgf@ya = 0.1 \pgf@y
+            \pgf@yc = 0.07 \pgf@y
+
+            \pgfpointpolar{45}{\pgf@ya}
+            \pgfpathlineto{\pgfpoint{\pgf@x}{-\pgf@yc + \pgf@yb}}
+
+            \pgfpathmoveto{\pgfpoint{0}{\pgf@yb}}
+            \pgfpointpolar{90}{\pgf@ya}
+            \pgfpathlineto{\pgfpoint{\pgf@x}{-\pgf@yc + \pgf@yb}}
+
+            \pgfpathmoveto{\pgfpoint{0}{\pgf@yb}}
+            \pgfpointpolar{135}{\pgf@ya}
+            \pgfpathlineto{\pgfpoint{\pgf@x}{-\pgf@yc + \pgf@yb}}
+            \pgfpathclose
+        }
+    }},
+    /cooling tower/.default = {\pgfkeys{/cooling tower/basic}}
+}
+
+
+\pgfdeclareshape{cooling tower}{
+    \savedanchor{\centerpoint}{\pgfpointorigin}
+    \savedanchor{\east}{
+        \pgfpointscale{0.5}{\pgfpoint{0}{-\pgfkeysvalueof{/cooling tower/dimension/height bottom}}
+        \pgf@x = \pgfkeysvalueof{/cooling tower/dimension/width bottom}}
+    }
+    \savedanchor{\south}{ \pgfpoint{0}{-\pgfkeysvalueof{/cooling tower/dimension/height bottom}} }
+    \savedanchor{\north}{ \pgfpoint{0}{\pgfkeysvalueof{/cooling tower/dimension/height top}} }
+    \savedanchor{\northeast}{
+        \pgfpointscale{0.5}{\pgfpoint{\pgfkeysvalueof{/cooling tower/dimension/width top}}{0}}
+        \pgf@y = \pgfkeysvalueof{/cooling tower/dimension/height top}
+    }
+
+    \anchor{center}{\centerpoint}
+    \anchor{north}{
+        \north
+    }
+    \anchor{east}{
+        \east
+    }
+    \anchor{west}{
+        \east 
+        \pgfpoint{-\pgf@x}{\pgf@y}
+    }
+    \anchor{south}{
+        \south
+    }
+    \anchor{northeast}{
+        \northeast
+        \pgf@x = 2.5 \pgf@x
+        \pgf@y = 0.5\pgf@y
+    }
+    \anchor{near northeast}{
+        \east
+        \pgfpoint{\pgf@x}{0}
+    }
+    \anchor{northwest}{
+        \northeast
+        \pgf@x = -2.5 \pgf@x
+        \pgf@y = 0.5\pgf@y
+    }
+    \anchor{near northwest}{
+        \east
+        \pgfpoint{-\pgf@x}{0}
+    }
+    \anchor{southeast}{
+        \east
+        \pgf@xa = \pgf@x
+        \south
+        \pgf@x = \pgf@xa
+    }
+    \anchor{southwest}{
+        \east
+        \pgf@xa = -\pgf@x
+        \south
+        \pgf@x = \pgf@xa
+    }
+
+    \backgroundpath{
+        \pgfpathmoveto{\centerpoint}
+        \east
+        \pgf@xa = \pgf@x    
+        \pgfpathlineto{\pgfpoint{\pgf@xa}{0}}
+        \south
+        \pgf@ya = \pgf@y
+        \pgfpathlineto{\pgfpoint{\pgf@xa}{\pgf@ya}}        
+        \pgfpathlineto{\pgfpoint{-\pgf@xa}{\pgf@ya}}
+        \pgfpathlineto{\pgfpoint{-\pgf@xa}{0}}
+        \pgfpathclose
+
+        \pgfpathmoveto{\pgfpoint{\pgf@xa}{0}}
+        \northeast
+        \pgf@xb = \pgf@x
+        \pgf@yb = \pgf@y
+        \pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@yb}}
+        \pgfpathlineto{\pgfpoint{-\pgf@xb}{\pgf@yb}}
+        \pgfpathlineto{\pgfpoint{-\pgf@xa}{0}}
+        \pgfpathclose
+        
+        \pgfkeys{/cooling tower/basic}
+        
+        \pgfusepath{stroke}
+    }
+}

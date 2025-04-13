@@ -1,0 +1,170 @@
+The anchors specifically defined for the tank asset are:
+
+\begin{center}
+    \begin{tabular}{c|lcc|l}
+        Abbreviation & Anchor name & & Abbreviation & Anchor name \\
+        \hline & & & & \\
+        tNE & north & & S & south\\
+        stNE & near north & & nS & near south \\
+        ftNE & far north & & fS & far south \\
+        & & & & \\
+        tNW & northwest & & SW & southwest \\
+        stNW & near northwest & &  nSW & near southwest \\
+        ftNW & far northwest & &  fSW & far southwest \\
+        & & & & \\
+    \end{tabular}
+\end{center}
+
+\begin{center}
+    \begin{tikzpicture}
+            \draw[step = 0.5cm, gray, very thin] (-4.25, -4.25) grid (4.25, 0.25);
+            
+            \node[tank, scale = 1.5, /agitator=flat] (Bempty) at (-2, -2) {};
+            \node[anchor = south] at (0, 0.25) {\textbf{\textbackslash node[tank, scale = 1.5]}};
+            \node[tank, scale = 1.5] (B) at (2, -2) {};
+            \node[cross] at (B.center) {};
+            \node[anchor = west, font = \tiny] at (B.center) {C};
+            \node[cross] at (B.east) {};
+            \node[anchor = east, font = \tiny] at (B.east) {E};
+            \node[cross] at (B.west) {};
+            \node[anchor = west, font = \tiny] at (B.west) {W};
+            \node[cross] at (B.north) {};
+            \node[anchor = south, font = \tiny] at (B.north) {N};
+            \node[cross] at (B.south) {};
+            \node[anchor = north, font = \tiny] at (B.south) {S};
+
+            \node[cross] at (B.far east) {};
+            \node[anchor = west, font = \tiny] at (B.far east) {fE};
+            \node[cross] at (B.far west) {};
+            \node[anchor = east, font = \tiny] at (B.far west) {fW};
+
+            \node[cross] at (B.northeast) {};
+            \node[anchor = south west, font = \tiny] at (B.northeast) {NE};
+            \node[cross] at (B.near northeast) {};
+            \node[anchor = east, font = \tiny] at (B.near northeast) {nNE};
+            \node[cross] at (B.far northeast) {};
+            \node[anchor = west, font = \tiny] at (B.far northeast) {fNE};
+            \node[cross] at (B.tube northeast) {};
+            \node[anchor = east, font = \tiny] at (B.tube northeast) {tNE};
+            \node[cross] at (B.semi-tube northeast) {};
+            \node[anchor = north, font = \tiny] at (B.semi-tube northeast) {stNE};
+            \node[cross] at (B.full-tube northeast) {};
+            \node[anchor = west, font = \tiny] at (B.full-tube northeast) {ftNE};
+
+            \node[cross] at (B.southeast) {};
+            \node[anchor = north west, font = \tiny] at (B.southeast) {SE};
+            \node[cross] at (B.near southeast) {};
+            \node[anchor = east, font = \tiny] at (B.near southeast) {nSE};
+            \node[cross] at (B.far southeast) {};
+            \node[anchor = west, font = \tiny] at (B.far southeast) {fSE};
+            \node[cross] at (B.tube southeast) {};
+            \node[anchor = east, font = \tiny] at (B.tube southeast) {tSW};
+            \node[cross] at (B.semi-tube southeast) {};
+            \node[anchor = north, font = \tiny] at (B.semi-tube southeast) {stSW};
+            \node[cross] at (B.full-tube southeast) {};
+            \node[anchor = west, font = \tiny] at (B.full-tube southeast) {ftSW};
+
+            \node[cross] at (B.northwest) {};
+            \node[anchor = south east, font = \tiny] at (B.northwest) {NW};
+            \node[cross] at (B.near northwest) {};
+            \node[anchor = west, font = \tiny] at (B.near northwest) {nNW};
+            \node[cross] at (B.far northwest) {};
+            \node[anchor = east, font = \tiny] at (B.far northwest) {fNW};
+            \node[cross] at (B.tube northwest) {};
+            \node[anchor = west, font = \tiny] at (B.tube northwest) {tNW};
+            \node[cross] at (B.semi-tube northwest) {};
+            \node[anchor = south, font = \tiny] at (B.semi-tube northwest) {stNW};
+            \node[cross] at (B.full-tube northwest) {};
+            \node[anchor = east, font = \tiny] at (B.full-tube northwest) {ftNW};
+
+            \node[cross] at (B.southwest) {};
+            \node[anchor = north east, font = \tiny] at (B.southwest) {SW};
+            \node[cross] at (B.near southwest) {};
+            \node[anchor = west, font = \tiny] at (B.near southwest) {nSW};
+            \node[cross] at (B.far southwest) {};
+            \node[anchor = east, font = \tiny] at (B.far southwest) {fSW};
+            \node[cross] at (B.tube southwest) {};
+            \node[anchor = west, font = \tiny] at (B.tube southwest) {tSW};
+            \node[cross] at (B.semi-tube southwest) {};
+            \node[anchor = south, font = \tiny] at (B.semi-tube southwest) {stSW};
+            \node[cross] at (B.full-tube southwest) {};
+            \node[anchor = east, font = \tiny] at (B.full-tube southwest) {ftSW};
+
+    \end{tikzpicture}
+    \\[0.25cm]
+    \begin{tikzpicture}
+        \draw[step = 0.5cm, gray, very thin] (-4.25, -4.25) grid (4.25, 0.25);
+
+        \node[dished tank, scale = 1.5] (Bempty) at (-2, -2) {};
+        \node[anchor = south] at (0.0, 0.25) {\textbf{\textbackslash node[dished tank, scale = 1.5]}};
+        \node[dished tank, scale = 1.5] (B) at (2, -2) {};
+
+        \node[cross] at (B.center) {};
+        \node[anchor = west, font = \tiny] at (B.center) {C};
+        \node[cross] at (B.east) {};
+        \node[anchor = east, font = \tiny] at (B.east) {E};
+        \node[cross] at (B.west) {};
+        \node[anchor = west, font = \tiny] at (B.west) {W};
+        \node[cross] at (B.north) {};
+        \node[anchor = south, font = \tiny] at (B.north) {N};
+        \node[cross] at (B.south) {};
+        \node[anchor = north, font = \tiny] at (B.south) {S};
+
+        \node[cross] at (B.far east) {};
+        \node[anchor = west, font = \tiny] at (B.far east) {fE};
+        \node[cross] at (B.far west) {};
+        \node[anchor = east, font = \tiny] at (B.far west) {fW};
+
+        \node[cross] at (B.northeast) {};
+        \node[anchor = south west, font = \tiny] at (B.northeast) {NE};
+        \node[cross] at (B.near northeast) {};
+        \node[anchor = east, font = \tiny] at (B.near northeast) {nNE};
+        \node[cross] at (B.far northeast) {};
+        \node[anchor = west, font = \tiny] at (B.far northeast) {fNE};
+        \node[cross] at (B.tube northeast) {};
+        \node[anchor = east, font = \tiny] at (B.tube northeast) {tNE};
+        \node[cross] at (B.semi-tube northeast) {};
+        \node[anchor = north, font = \tiny] at (B.semi-tube northeast) {stNE};
+        \node[cross] at (B.full-tube northeast) {};
+        \node[anchor = west, font = \tiny] at (B.full-tube northeast) {ftNE};
+
+        \node[cross] at (B.southeast) {};
+        \node[anchor = north west, font = \tiny] at (B.southeast) {SE};
+        \node[cross] at (B.near southeast) {};
+        \node[anchor = east, font = \tiny] at (B.near southeast) {nSE};
+        \node[cross] at (B.far southeast) {};
+        \node[anchor = west, font = \tiny] at (B.far southeast) {fSE};
+        \node[cross] at (B.tube southeast) {};
+        \node[anchor = east, font = \tiny] at (B.tube southeast) {tSW};
+        \node[cross] at (B.semi-tube southeast) {};
+        \node[anchor = north, font = \tiny] at (B.semi-tube southeast) {stSW};
+        \node[cross] at (B.full-tube southeast) {};
+        \node[anchor = west, font = \tiny] at (B.full-tube southeast) {ftSW};
+
+        \node[cross] at (B.northwest) {};
+        \node[anchor = south east, font = \tiny] at (B.northwest) {NW};
+        \node[cross] at (B.near northwest) {};
+        \node[anchor = west, font = \tiny] at (B.near northwest) {nNW};
+        \node[cross] at (B.far northwest) {};
+        \node[anchor = east, font = \tiny] at (B.far northwest) {fNW};
+        \node[cross] at (B.tube northwest) {};
+        \node[anchor = west, font = \tiny] at (B.tube northwest) {tNW};
+        \node[cross] at (B.semi-tube northwest) {};
+        \node[anchor = south, font = \tiny] at (B.semi-tube northwest) {stNW};
+        \node[cross] at (B.full-tube northwest) {};
+        \node[anchor = east, font = \tiny] at (B.full-tube northwest) {ftNW};
+
+        \node[cross] at (B.southwest) {};
+        \node[anchor = north east, font = \tiny] at (B.southwest) {SW};
+        \node[cross] at (B.near southwest) {};
+        \node[anchor = west, font = \tiny] at (B.near southwest) {nSW};
+        \node[cross] at (B.far southwest) {};
+        \node[anchor = east, font = \tiny] at (B.far southwest) {fSW};
+        \node[cross] at (B.tube southwest) {};
+        \node[anchor = west, font = \tiny] at (B.tube southwest) {tSW};
+        \node[cross] at (B.semi-tube southwest) {};
+        \node[anchor = south, font = \tiny] at (B.semi-tube southwest) {stSW};
+        \node[cross] at (B.full-tube southwest) {};
+        \node[anchor = east, font = \tiny] at (B.full-tube southwest) {ftSW};
+    \end{tikzpicture}
+\end{center}

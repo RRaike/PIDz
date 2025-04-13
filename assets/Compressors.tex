@@ -1,0 +1,228 @@
+\pgfkeys{
+        /compressor/dimension/radius/.code = {#1},
+        /compressor/dimension/radius/.initial = {0.5 cm},
+        /compressor/angleOne/.code = {#1},
+        /compressor/angleOne/.initial = {25},
+        /compressor/angleTwo/.code = {#1},
+        /compressor/angleTwo/.initial = {125},
+        /compressor/.is choice,
+        /compressor/basic/.code = {#1},
+        /compressor/basic/.default = {},
+        /compressor/centrifugal/.code = {
+            \pgfkeys{/compressor/basic/.append code = {
+                \pgfpathmoveto{\east}
+                \east
+                \pgfpathlineto{\pgfpoint{-\pgf@x}{\pgf@y}}
+            }
+        }},
+        /compressor/diaphragm/.code = {
+            \pgfkeys{/compressor/basic/.append code = {
+                \pgfpathmoveto{\pgfpointpolar{\pgfkeysvalueof{/compressor/angleTwo}}{\pgfkeysvalueof{/compressor/dimension/radius}}}
+                \pgfpatharcto{
+                    1.8*\pgfkeysvalueof{/compressor/dimension/radius}
+                }{
+                    1.8*\pgfkeysvalueof{/compressor/dimension/radius}
+                }{0}{0}{1}{
+                    \pgfpointpolar{-\pgfkeysvalueof{/compressor/angleTwo}}{\pgfkeysvalueof{/compressor/dimension/radius}}
+                    }
+            }}
+        },
+        /compressor/turbo/.code = {
+            \pgfkeys{/compressor/basic/.append code = {
+                \pgfpathmoveto{\centerpoint}
+                \pgfpathcircle{\centerpoint}{0.5*\pgfkeysvalueof{/compressor/dimension/radius}}
+            }}
+        },
+        /compressor/reciprocating/.code = {
+            \pgfkeys{/compressor/basic/.append code = {
+
+                \pgfpointscale{0.4}{\east}
+                \pgf@xa = \pgf@x
+    
+                \pgfpathmoveto{\pgfpoint{-\pgf@xa}{0}}
+                \pgfpathlineto{\pgfpoint{\pgf@xa}{0}}
+    
+                \pgfpointscale{0.4}{\north}
+                \pgf@ya = \pgf@y
+
+                \pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@ya}}
+                \pgfpathlineto{\pgfpoint{\pgf@xa}{-\pgf@ya}}
+            }
+        }},
+        /compressor/screw/.code = {
+            \pgfkeys{/compressor/basic/.append code = {
+                \pgfpointscale{0.3}{\east}
+                \pgf@xa = \pgf@x
+                \pgfpointscale{0.15}{\north}
+                \pgf@ya = \pgf@y 
+                
+                \pgfpathmoveto{\pgfpoint{-2.25 \pgf@xa}{0.5 \pgf@ya}}
+                \pgfpathlineto{\pgfpoint{-2 \pgf@xa}{\pgf@ya}}
+
+                \pgfpathmoveto{\pgfpoint{-2.25 \pgf@xa}{-0.5\pgf@ya}}
+                \pgfpathlineto{\pgfpoint{-2 \pgf@xa}{ 0\pgf@ya}}
+
+                \foreach \j in {-2, -1, 0} {
+                    \pgfpointscale{\j}{\pgfpoint{\pgf@xa}{0}}
+                    \pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@ya}}
+
+                    \pgfpointscale{\j + 0.5}{\pgfpoint{\pgf@xa}{0}}
+                    \pgfpathlineto{\pgfpoint{\pgf@x}{0 \pgf@ya}}
+
+                    \pgfpointscale{\j + 1}{\pgfpoint{\pgf@xa}{0}}
+                    \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@ya}}
+                }
+                
+                \foreach \j in {-2, -1, 0} {
+                    \pgfpointscale{\j}{\pgfpoint{\pgf@xa}{0}}
+                    \pgfpathmoveto{\pgfpoint{\pgf@x}{0 \pgf@ya}}
+
+                    \pgfpointscale{\j + 0.5}{\pgfpoint{\pgf@xa}{0}}
+                    \pgfpathlineto{\pgfpoint{\pgf@x}{-\pgf@ya}}
+
+                    \pgfpointscale{\j + 1}{\pgfpoint{\pgf@xa}{0}}
+                    \pgfpathlineto{\pgfpoint{\pgf@x}{0 \pgf@ya}}
+                }
+
+                \pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@ya}}
+                \pgfpathlineto{\pgfpoint{1.25 \pgf@xa}{0.5 \pgf@ya}}
+
+                
+                \pgfpathmoveto{\pgfpoint{\pgf@xa}{0 \pgf@ya}}
+                \pgfpathlineto{\pgfpoint{1.25 \pgf@xa}{-0.5 \pgf@ya}}
+                
+            }
+        }},
+        /compressor/roller vane/.code = {
+            \pgfkeys{/compressor/basic/.append code = {
+                \pgfpointscale{0.4}{\east}
+                \pgf@xa = \pgf@x
+    
+                \east
+                \pgfpathmoveto{\pgfpoint{-\pgf@x}{0}}
+                \pgfpathlineto{\pgfpoint{-\pgf@xa}{0}}
+
+                \pgfpathmoveto{\pgfpointscale{0.68}{\north}}
+                \pgfpathlineto{\pgfpointscale{0.4}{\north}}
+
+                \pgfpathmoveto{\pgfpointscale{-0.68}{\north}}
+                \pgfpathlineto{\pgfpointscale{-0.4}{\north}}
+            }
+        }},
+        /compressor/rotary piston/.code = {
+            \pgfkeys{/compressor/basic/.append code = {
+                \pgfpointscale{0.4}{\east}
+                \pgf@xa = \pgf@x
+
+                \pgfpathmoveto{\pgfpointscale{-0.4}{\east}}
+                \pgfpathlineto{\pgfpointscale{0.4}{\east}}
+    
+                \pgfpointscale{0.2}{\east}
+                \pgf@xb = \pgf@x
+
+                \pgfpointscale{0.346}{\north}
+                \pgf@ya = \pgf@y
+
+                \pgfpathmoveto{\pgfpoint{\pgf@xb}{\pgf@ya}}
+                \pgfpatharc{60}{-60}{\pgf@xa}
+
+                \pgfpathmoveto{\pgfpoint{-\pgf@xb}{\pgf@ya}}
+                \pgfpatharc{120}{240}{\pgf@xa}
+            }
+        }},
+        /compressor/liquid ring/.code = {
+            \pgfkeys{/compressor/basic/.append code = {
+                \pgfpathmoveto{\centerpoint}
+                \pgfpathcircle{\centerpoint}{0.3*\pgfkeysvalueof{/compressor/dimension/radius}}
+
+                \foreach \j in {0, 60, 120, 180, 240, 300} {
+                    \pgfpathmoveto{\pgfpointpolar{\j}{0.3*\pgfkeysvalueof{/compressor/dimension/radius}}}
+                    \pgfpathlineto{\pgfpointpolar{\j}{0.5*\pgfkeysvalueof{/compressor/dimension/radius}}}
+                }            
+            }}
+        },
+        /compressor/jet/.code = {
+            \pgfkeys{/compressor/basic/.append code = {
+                \pgfpointscale{0.5}{\east}
+                \pgf@xa = \pgf@x
+
+                \pgfpointscale{0.53}{\north}
+                \pgf@ya = \pgf@y 
+
+                \pgfpointscale{0.78}{\east} % Manually calculated to close figure
+                \pgf@xb = \pgf@x
+
+                \pgfpointscale{0.4}{\north}
+                \pgf@yb = \pgf@y
+                
+                \pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@ya}}
+                \pgfpatharc{330}{210}{\pgf@xb and \pgf@yb}
+                \pgfpathmoveto{\pgfpoint{\pgf@xa}{-\pgf@ya}}
+                \pgfpatharc{30}{150}{\pgf@xb and \pgf@yb}
+            }
+        }},
+}
+
+\pgfdeclareshape{compressor}{
+    \savedanchor{\centerpoint}{
+        \pgfpointorigin
+    }
+    \savedanchor{\north}{
+        \pgfpoint{0}{\pgfkeysvalueof{/compressor/dimension/radius}}
+    }
+    \savedanchor{\east}{
+        \pgfpoint{\pgfkeysvalueof{/compressor/dimension/radius}}{0}    
+    }
+
+    \anchor{center}{
+        \centerpoint
+    }
+    \anchor{north}{
+        \north
+    }
+    \anchor{south}{
+        \north
+        \pgf@y = -\pgf@y
+    }
+    \anchor{east}{
+        \east
+    }
+    \anchor{west}{
+        \east
+        \pgf@x = -\pgf@x
+    }
+    \anchor{northeast}{
+        \north
+        \pgf@ya = \pgf@y
+        \pgfpoint{0.707\pgf@ya}{0.707\pgf@ya}
+    }
+    \anchor{southeast}{
+        \north
+        \pgf@ya = \pgf@y
+        \pgfpoint{0.707\pgf@ya}{-0.707\pgf@ya}
+    }
+    \anchor{northwest}{
+        \north
+        \pgf@ya = \pgf@y
+        \pgfpoint{-0.707\pgf@ya}{0.707\pgf@ya}
+    }
+    \anchor{southwest}{
+        \north
+        \pgf@ya = \pgf@y
+        \pgfpoint{-0.707\pgf@ya}{-0.707\pgf@ya}
+    }
+
+    \backgroundpath{
+        \pgfpathmoveto{\pgfpointorigin}
+        \pgfpathcircle{\pgfpointorigin}{\pgfkeysvalueof{/compressor/dimension/radius}}
+    
+        \pgfpathmoveto{\pgfpointpolar{\pgfkeysvalueof{/compressor/angleOne}}{\pgfkeysvalueof{/compressor/dimension/radius}}}
+        \pgfpathlineto{\pgfpointpolar{\pgfkeysvalueof{/compressor/angleTwo}}{\pgfkeysvalueof{/compressor/dimension/radius}}}
+        
+        \pgfpathmoveto{\pgfpointpolar{-\pgfkeysvalueof{/compressor/angleOne}}{\pgfkeysvalueof{/compressor/dimension/radius}}}
+        \pgfpathlineto{\pgfpointpolar{-\pgfkeysvalueof{/compressor/angleTwo}}{\pgfkeysvalueof{/compressor/dimension/radius}}}
+        
+        \pgfkeys{/compressor/basic}
+        \pgfusepath{stroke}
+    }
+}

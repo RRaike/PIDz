@@ -1,0 +1,21 @@
+Accessing options is facilitated through pgfkeys, which makes them snappy. The keys though which to access them are the names of the assets, with the exception of the dished tank which uses the tank options. An example makes this much more clear. \textbf{Note that these commands exists within a tikzpicture environment.}
+
+\begin{tabular}{m{5cm}|m{8cm}}
+    \begin{tikzpicture}
+        \draw[step = 0.5cm, gray, very thin] (-2.25, -1.25) grid (2.25, 0.25);
+        \node[pump, pump = /reciprocating] (pump) at (0, -0.5) {};
+    \end{tikzpicture}
+    &
+    \verb|\node[pump, /pump = reciprocating]|
+    \\
+    \hline &
+    \\
+    \begin{tikzpicture}
+        \draw[step = 0.5cm, gray, very thin] (-2.25, -3.25) grid (2.25, 0.25);
+        \node[dished tank, /tank = legs, /tank = jacket] (tank) at (0, -1.5) {};
+    \end{tikzpicture}
+    &
+    \verb|\node[dished tank, /tank, legs, /tank = jacket]|
+    
+\end{tabular}
+

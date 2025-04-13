@@ -1,0 +1,254 @@
+\pgfkeys{
+        /drier/dimension/height/.code = {#1},
+        /drier/dimension/height/.initial = 2 cm,
+        /drier/dimension/width bottom/.code = {#1},
+        /drier/dimension/width bottom/.initial = 1 cm,
+        /drier/dimension/width top/.code = {#1},
+        /drier/dimension/width top/.initial = 0.7 cm,
+        /drier/.is choice,
+        /drier/basic/.code = {#1},
+        /drier/basic/.initial = {},
+        /drier/.default = {\pgfkeys{/drier/basic}},
+        /drier/oven/.code = {
+            \pgfkeys{/drier/basic/.append code = {
+                \northeast
+                \pgf@xa = \pgf@x
+                \pgf@ya = \pgf@y
+
+                \pgfpointscale{0.75}{\pgfpoint{\pgf@xa}{0}}
+                \pgf@xa = \pgf@x
+                
+                \foreach \j in {0.1, 0.2, 0.3} {
+                    \pgfpointscale{0.3 + \j}{\pgfpoint{0}{\pgf@ya}}
+                    \pgf@yb = \pgf@y
+
+                    \pgfpathmoveto{\pgfpoint{-\pgf@xa}{\pgf@yb}}
+                    \pgfpathlineto{\pgfpoint{\pgf@xa}{\pgf@yb}}
+                }
+            }
+        }},
+        /drier/turbo/.code = {
+            \pgfkeys{/drier/basic/.append code = {
+                \pgfpointscale{0.2}{\east}
+                \pgf@xa = \pgf@x
+                
+                \pgfpointscale{0.15}{\north}
+                \pgf@ya = \pgf@y
+
+                \pgfpathmoveto{\pgfpoint{-2 \pgf@xa}{\pgf@ya}}
+                \pgfpathlineto{\pgfpoint{2 \pgf@xa}{\pgf@ya}}
+
+                \east
+                \pgfpathmoveto{\pgfpoint{- \pgf@x}{2 \pgf@ya}}
+                \pgfpathlineto{\pgfpoint{-1.5 \pgf@xa}{2 \pgf@ya}}
+
+                \east
+                \pgfpathmoveto{\pgfpoint{\pgf@x}{2 \pgf@ya}}
+                \pgfpathlineto{\pgfpoint{1.5 \pgf@xa}{2 \pgf@ya}}
+
+                \pgfpathmoveto{\pgfpoint{-2 \pgf@xa}{3 \pgf@ya}}
+                \pgfpathlineto{\pgfpoint{2 \pgf@xa}{3 \pgf@ya}}
+
+                \pgfpathmoveto{\pgfpoint{0}{\pgf@ya}}
+                \pgfpathlineto{\north}
+            }
+        }},
+        /drier/fluidized/.code = {
+            \pgfkeys{/drier/basic/.append code = {
+                \east
+                \pgf@xa = \pgf@x
+                
+                \pgfpointscale{0.12}{\north}
+                \pgf@ya = \pgf@y
+                
+                \pgfpathmoveto{\pgfpoint{- \pgf@xa}{\pgf@ya}}
+                \pgfpathlineto{\pgfpoint{\pgf@xa}{\pgf@ya}}
+
+                \pgfusepath{stroke}
+                
+                \foreach \j in {-0.75, -0.25, 0.25, 0.75} {
+                    \pgfpointscale{\j}{\pgfpoint{\pgf@xa}{0}}
+                    \pgfpathcircle{\pgfpoint{\pgf@x}{2 \pgf@ya}}{1 pt}
+                }
+                
+                \foreach \j in {-0.5, 0, 0.5} {
+                    \pgfpointscale{\j}{\pgfpoint{\pgf@xa}{0}}
+                    \pgfpathcircle{\pgfpoint{\pgf@x}{3 \pgf@ya}}{1 pt}
+                }
+                \pgfusepath{fill}
+                
+                \pgfpathmoveto{\pgfpoint{- \pgf@xa}{4 \pgf@ya}}
+                \pgfpathlineto{\pgfpoint{\pgf@xa}{4 \pgf@ya}}
+            }
+        }},
+        /drier/spray/.code = {
+            \pgfkeys{/drier/basic/.append code = {
+                \north
+                \pgf@ya = 0.85 \pgf@y
+
+                \pgf@xa = 0.2 cm
+
+                \pgfpathmoveto{\north}
+                \pgfpathlineto{\pgfpoint{-\pgf@xa}{\pgf@ya}}
+                \pgfpathmoveto{\north}
+                \pgfpathlineto{\pgfpoint{0}{\pgf@ya}}
+                \pgfpathmoveto{\north}
+                \pgfpathlineto{\pgfpoint{\pgf@xa}{\pgf@ya}}
+            }
+        }},
+        /drier/belt/.code = {
+            \pgfkeys{/drier/basic/.append code = {
+                \north
+                \pgf@ya = 0.6 \pgf@y    % Line above circles
+
+                \north
+                \pgf@yb = 0.4 \pgf@y    % Line underneath circles
+
+                \east
+                \pgf@xa = 0.6 \pgf@x    % Position center of circles
+
+                \east
+                \pgf@xb = 0.2 \pgf@x    % Radius of circles
+
+                \pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@ya}}
+                \pgfpatharc{90}{450}{\pgf@xb}
+                
+                \pgfpathlineto{\pgfpoint{-\pgf@xa}{\pgf@ya}}
+                \pgfpatharc{90}{450}{\pgf@xb}
+
+                \pgfpathmoveto{\pgfpoint{-\pgf@xa}{\pgf@yb}}
+                \pgfpathlineto{\pgfpoint{\pgf@xa}{\pgf@yb}}
+
+                \pgfusepath{stroke}
+            }
+        }},
+        /drier/rotary/.code = {
+            \pgfkeys{/drier/basic/.append code = {
+                \north
+                \pgf@ya = 0.3 \pgf@y
+                \pgf@yb = 0.8 \pgf@y
+
+                \east 
+                \pgf@xa = 0.5 \pgf@x
+                \pgf@xb = 0.8 \pgf@x
+                
+                \pgfpathmoveto{\pgfpoint{0}{\pgf@yb}}
+                \pgfpatharc{90}{45}{\pgf@xb}
+                \pgfpatharc{45}{135}{\pgf@xb}
+                
+                \pgfpathcircle{\pgfpoint{0}{\pgf@ya}}{\pgf@xa}
+            }
+        }}
+}
+
+\pgfdeclareshape{drier}{
+    \savedanchor{\centerpoint}{\pgfpointorigin}
+    \savedanchor{\east}{
+        \pgfpointscale{0.5}{\pgfpoint{\pgfkeysvalueof{/drier/dimension/width bottom}}{0}}
+    }
+    \savedanchor{\north}{
+        \pgfpointscale{0.5}{\pgfpoint{0}{\pgfkeysvalueof{/drier/dimension/height}}}
+    }
+    \savedanchor{\eastnorth}{
+        \pgfpointscale{0.35}{\pgfpoint{0}{\pgfkeysvalueof{/drier/dimension/height}}}
+        \pgf@ya = \pgf@y
+        \pgfpointscale{0.5}{\pgfpoint{\pgfkeysvalueof{/drier/dimension/width bottom}}{0}}
+        \pgf@y = \pgf@ya
+    }
+    \savedanchor{\northeast}{
+         \pgfpointscale{0.5}{\pgfpoint{\pgfkeysvalueof{/drier/dimension/width top}}{\pgfkeysvalueof{/drier/dimension/height}}}
+    }
+    
+
+    \anchor{center}{
+        \centerpoint
+    }
+    \anchor{east}{
+        \east
+    }
+    \anchor{north}{
+        \north
+    }
+    \anchor{west}{
+        \east 
+        \pgf@x = -\pgf@x
+    }
+    \anchor{south}{
+        \north
+        \pgf@y = -\pgf@y
+    }
+    \anchor{northeast}{
+        \eastnorth
+    }
+    \anchor{far northeast}{
+        \northeast
+    }
+    \anchor{near northeast}{
+        \eastnorth
+        \pgf@y = 0.71\pgf@y
+    }
+    \anchor{northwest}{
+        \eastnorth
+        \pgf@x = -\pgf@x
+    }
+    \anchor{far northwest}{
+        \northeast
+        \pgf@x = -\pgf@x
+    }
+    \anchor{near northwest}{
+        \eastnorth
+        \pgf@y = 0.71\pgf@y
+        \pgf@x = -\pgf@x
+    }
+    \anchor{southeast}{
+        \east
+        \pgf@xa = \pgf@x
+        \north
+        \pgf@y = -\pgf@y
+        \pgf@x = \pgf@xa
+    }
+    \anchor{near southeast}{
+        \east
+        \pgf@xa = \pgf@x
+        \north
+        \pgf@y = -0.5\pgf@y
+        \pgf@x = \pgf@xa
+    }
+    \anchor{southwest}{
+        \east
+        \pgf@xa = \pgf@x
+        \north
+        \pgf@y = -\pgf@y
+        \pgf@x = -\pgf@xa
+    }
+    \anchor{near southwest}{
+        \east
+        \pgf@xa = \pgf@x
+        \north
+        \pgf@y = -0.5\pgf@y
+        \pgf@x = -\pgf@xa
+    }
+
+
+    \backgroundpath{
+        \pgfpathmoveto{\east}
+        \pgfpathlineto{\eastnorth}
+        \pgfpathlineto{\northeast}
+        
+        \northeast
+        \pgfpathlineto{\pgfpoint{-\pgf@x}{\pgf@y}}
+        \eastnorth
+        \pgf@xa = \pgf@x
+        \pgfpathlineto{\pgfpoint{-\pgf@x}{\pgf@y}}
+
+        \north
+        \pgf@ya = \pgf@y
+        \pgfpathlineto{\pgfpoint{-\pgf@xa}{-\pgf@ya}}
+        \pgfpathlineto{\pgfpoint{\pgf@xa}{-\pgf@ya}}
+        \pgfpathclose
+        
+        \pgfkeys{/drier/basic}
+        
+        \pgfusepath{stroke}
+    }
+}

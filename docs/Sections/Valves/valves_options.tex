@@ -1,0 +1,53 @@
+\begin{center}
+    \begin{tikzpicture}
+        \draw[step = 0.5cm, gray, very thin] (-7.25, -1.25) grid (7.25, 0.25);
+        
+        \node[valve, /valve= basic] (Aempty) at (-6.0, -0.5) {};
+        \node[anchor = south] at (-6, 0.25) {\textbf{basic}};
+
+        \node[valve, /valve= angle] (Bempty) at (-3.0, -0.5) {};
+        \node[anchor = south] at (-3.0, 0.25) {\textbf{angle}};
+
+        \node[valve, /valve= three way] (Cempty) at (0.0, -0.5) {};
+        \node[anchor = south] at (0.0, 0.25) {\textbf{three way}};
+
+        \node[valve, /valve= globe] (Ae) at (3.0, -0.5) {};
+        \node[anchor = south] at (3.0, 0.25) {\textbf{globe}};
+
+        \node[valve, /valve= ball] (Be) at (6.0, -0.5) {};
+        \node[anchor = south] at (6.0, 0.25) {\textbf{ball}};
+    \end{tikzpicture} 
+    \\[0.25cm]
+    \begin{tikzpicture}
+        \draw[step = 0.5cm, gray, very thin] (-7.25, -1.25) grid (7.25, 0.25);
+
+        \node[valve, /valve= gate] (Ce) at (-6.0, -0.5) {};
+        \node[anchor = south] at (-6.0, 0.25) {\textbf{gate}};
+
+        \node[valve, /valve= butterfly] (Ae) at (-3.0, -0.5) {};
+        \node[anchor = south] at (-3, 0.25) {\textbf{butterfly}};
+
+        \node[valve, /valve= needle] (Be) at (0.0, -0.5) {};
+        \node[anchor = south] at (0.0, 0.25) {\textbf{needle}};
+
+        \node[valve, /valve= continuous] (Ce) at (3.0, -0.5) {};
+        \node[anchor = south] at (3, 0.25) {\textbf{continuous}};
+
+        \node[valve, /valve= check] (Ae) at (6.0, -0.5) {};
+        \node[anchor = south] at (6.0, 0.25) {\textbf{check}};
+
+    \end{tikzpicture}
+    \\[0.5cm]
+    \begin{tikzpicture}
+        \draw[step = 0.5cm, gray, very thin] (-7.25, -1.25) grid (7.25, 0.25);
+
+        \node[valve, /valve= spring loaded] (Be) at (-6.0, -0.5) {};
+        \node[anchor = south] at (-6, 0.25) {\textbf{spring loaded}};
+
+        \node[valve, /valve= safety] (Ce) at (-3.0, -0.5) {};
+        \node[anchor = south] at (-3.0, 0.25) {\textbf{safety}};
+
+        \node[valve, /valve= breather] (Be) at (0.0, -0.5) {};
+        \node[anchor = south] at (0, 0.25) {\textbf{breather}};
+    \end{tikzpicture}
+\end{center}

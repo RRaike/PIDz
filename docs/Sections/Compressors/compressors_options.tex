@@ -1,0 +1,38 @@
+\begin{center}
+    \begin{tikzpicture}
+        \draw[step = 0.5cm, gray, very thin] (-7.25, -1.25) grid (7.25, 0.25);
+
+        \node[compressor, /compressor = centrifugal] (A) at (-6.0, -0.5) {};
+        \node[anchor = south] at (-6.0, 0.25) {\textbf{centrifugal}};
+
+        \node[compressor, /compressor = diaphragm] (A) at (-3.0, -0.5) {};
+        \node[anchor = south] at (-3.0, 0.25) {\textbf{diaphragm}};
+
+        \node[compressor, /compressor = turbo] (A) at (0, -0.5) {};
+        \node[anchor = south] at (0, 0.25) {\textbf{turbo}};
+
+        \node[compressor, /compressor = reciprocating] (A) at (3.0, -0.5) {};
+        \node[anchor = south] at (3.0, 0.25) {\textbf{reciprocating}};
+
+        \node[compressor, /compressor = screw] (A) at (6.0, -0.5) {};
+        \node[anchor = south] at (6.0, 0.25) {\textbf{screw}};
+
+    \end{tikzpicture}
+    \\[0.25cm]
+    \begin{tikzpicture}
+        \draw[step = 0.5cm, gray, very thin] (-7.25, -1.25) grid (7.25, 0.25);
+
+        \node[compressor, /compressor = roller vane] (A) at (-6.0, -0.5) {};
+        \node[anchor = south] at (-6.0, 0.25) {\textbf{roller vane}};
+
+        \node[compressor, /compressor = rotary piston] (A) at (-3.0, -0.5) {};
+        \node[anchor = south] at (-3.0, 0.25) {\textbf{rotary piston}};
+
+        \node[compressor, /compressor = liquid ring] (A) at (0.0, -0.5) {};
+        \node[anchor = south] at (0.0, 0.25) {\textbf{liquid ring}};
+
+        \node[compressor, /compressor = jet] (A) at (3.0, -0.5) {};
+        \node[anchor = south] at (3.0, 0.25) {\textbf{jet}};
+
+    \end{tikzpicture}
+\end{center}

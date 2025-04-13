@@ -1,0 +1,324 @@
+\pgfkeys{
+        /separator/dimension/height body/.code = {#1},
+        /separator/dimension/height body/.initial = {1 cm},
+        /separator/dimension/height cone/.code = {#1},
+        /separator/dimension/height cone/.initial = {0.5 cm},
+        /separator/dimension/width/.code = {#1},
+        /separator/dimension/width/.initial = {1 cm},
+        /separator/.is choice,
+        /separator/basic/.code = {#1},
+        /separator/basic/.default = {},
+        /separator/sifter/.code = {
+            \pgfkeys{/separator/basic/.append code = {
+                \pgfusepath{stroke}
+                
+                \pgfpointscale{0.75}{\northeast}
+                \pgf@xa = \pgf@x
+                \pgf@ya = \pgf@y
+                
+                \pgfsetarrowsend{Latex[length=4pt, width = 2pt]}
+                
+                \pgfpathmoveto{\pgfpoint{-\pgf@xa}{\pgf@ya}}
+                \pgfpathlineto{\pgfpoint{\pgf@xa}{\pgf@ya}}
+
+                \pgfusepath{stroke}
+
+                \pgfpointscale{0.75}{\northeast}
+                \pgf@xa = 0.4 \pgf@x
+                \pgf@ya = \pgf@y
+                
+                \pgfpathmoveto{\pgfpoint{-\pgf@xa}{\pgf@ya}}
+
+                \pgfpointscale{0.4}{\northeast}
+                \pgf@xb = \pgf@x
+                \pgf@yb = \pgf@y
+                
+                \pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@yb}}
+                \pgfsetarrowsend{}
+            }
+        }},
+        /separator/impact/.code = {
+            \pgfkeys{/separator/basic/.append code = {
+                \north
+                \pgf@ya = \pgf@y
+
+                \pgfpathmoveto{\pgfpoint{0}{-\pgf@ya}}
+                \pgfpathlineto{\north}
+            }
+        }},
+        /separator/gravity/.code = {
+            \pgfkeys{/separator/basic/.append code = {
+                \pgfusepath{stroke}
+                \north
+                \pgf@ya = 0.8 \pgf@y
+
+                \pgfsetarrowsend{Latex[length=4pt, width = 2pt]}
+                \pgfpathmoveto{\pgfpoint{0}{\pgf@ya}}                
+                \pgfpathlineto{\pgfpoint{0}{-\pgf@ya}}
+                \pgfusepath{stroke}
+            }
+        }},
+        /separator/wet scrubber/.code = {
+            \pgfkeys{/separator/basic/.append code = {
+                \pgfusepath{stroke}
+                \north
+                \pgf@ya = 0.8 \pgf@y
+
+                \pgfsetarrowsend{Latex[length=4pt, width = 2pt]}
+                \pgfpathmoveto{\pgfpoint{0}{\pgf@ya}}                
+                \pgfpathlineto{\pgfpoint{0}{-\pgf@ya}}
+                \pgfusepath{stroke}
+
+                \pgfsetarrowsend{}
+                
+                \northeast
+                \pgf@xa = 0.17 \pgf@x
+                \pgf@ya = 0.75 \pgf@y
+
+                \pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@ya}}
+                \pgfpatharc{180}{360}{\pgf@xa}
+                \pgfpatharc{180}{360}{\pgf@xa}
+            }
+        }},
+        /separator/spray/.code = {
+            \pgfkeys{/separator/basic/.append code = {
+                \north
+                \pgf@ya = 0.75 \pgf@y
+
+                \pgfpathmoveto{\north}
+                \pgfpathlineto{\pgfpoint{0}{\pgf@ya}}
+
+                \pgfpathmoveto{\north}
+                \pgfpointpolar{-70}{\pgf@ya}
+                \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@ya}}
+
+                \pgfpathmoveto{\north}
+                \pgfpointpolar{-70}{\pgf@ya}
+                \pgfpathlineto{\pgfpoint{-\pgf@x}{\pgf@ya}}
+    
+                \pgfusepath{stroke}
+            }
+        }},
+        /separator/electrostatic/.code = {
+            \pgfkeys{/separator/basic/.append code = {
+                \northeast
+                \pgf@xa = 0.15 \pgf@x
+                
+                \northeast
+                \pgf@xb = 0.6 \pgf@x
+                
+                \north
+                \pgf@ya = \pgf@y
+
+                \north
+                \pgf@yb = 0.6 \pgf@y
+                
+                \north
+                \pgf@yc = 0.8 \pgf@y
+
+                \foreach \j in {-1, 1} {
+                    \pgfpathmoveto{\pgfpoint{\j \pgf@xa}{-\pgf@ya}}
+                    \pgfpathlineto{\pgfpoint{\j \pgf@xa}{-\pgf@yb}}
+                    \pgfpathmoveto{\pgfpoint{\j \pgf@xa}{-\pgf@yc}}
+                    \pgfpathlineto{\pgfpoint{\j \pgf@xb}{-\pgf@yc}}
+                }
+                
+                \pgfusepath{stroke}
+            }
+        }},
+        /separator/electromagnetic/.code = {
+            \pgfkeys{/separator/basic/.append code = {
+                \northeast
+                \pgf@xa = 0.8 \pgf@x
+                \pgf@ya = 0.8 \pgf@y
+
+
+                \northeast
+                \pgf@xb = 0.20 \pgf@x
+
+                \northeast
+                \pgf@xc = 0.6 \pgf@x
+    
+                \pgfpathmoveto{\pgfpoint{-\pgf@xa}{-\pgf@ya}}
+                \pgfpathlineto{\pgfpoint{-\pgf@xc}{-\pgf@ya}}
+                \pgfpatharc{180}{0}{\pgf@xb}
+                \pgfpatharc{180}{0}{\pgf@xb}
+                \pgfpatharc{180}{0}{\pgf@xb}
+                \pgfpathlineto{\pgfpoint{\pgf@xa}{-\pgf@ya}}
+                
+                \pgfusepath{stroke}
+            }
+        }},
+        /separator/permanent magnet/.code = {
+            \pgfkeys{/separator/basic/.append code = {
+                \pgfusepath{stroke}
+                
+                \pgfsetroundcap
+                \pgfsetlinewidth{4 \pgflinewidth}
+                
+                \northeast
+                \pgf@xa = 0.4 \pgf@x
+                \pgf@ya = 0.3 \pgf@y
+
+                \pgfpathmoveto{\pgfpoint{-\pgf@xa}{0}}
+                \pgfpathlineto{\pgfpoint{-\pgf@xa}{-\pgf@ya}}
+                \pgfpathlineto{\pgfpoint{\pgf@xa}{-\pgf@ya}}
+                \pgfpathlineto{\pgfpoint{\pgf@xa}{0}}
+
+                \pgfusepath{stroke}
+                
+                \pgfsetlinewidth{0.25 \pgflinewidth}
+                \pgfsetbuttcap
+            }
+        }},
+        /separator/cyclone/.code = {
+            \pgfkeys{/separator/basic/.append code = {
+                \pgfusepath{stroke}
+                
+                
+                \northeast
+                \pgf@xa = 0.9 \pgf@x
+                \pgf@ya = 0.3 \pgf@y
+
+                \northeast
+                \pgf@xb = 0.3 \pgf@x
+                \pgf@yb = 0.1 \pgf@y
+
+                \northeast
+                \pgfpathmoveto{\pgfpoint{-0.3 \pgf@x}{0.5 \pgf@y}}
+                \pgfpatharc{450}{270}{\pgf@xa and \pgf@ya}
+                \pgfpatharc{270}{90}{\pgf@xb and \pgf@yb}
+                
+                \pgfsetarrowsend{Latex[length=4pt, width = 2pt]}
+                \pgfpatharc{450}{270}{\pgf@xa and \pgf@ya}
+
+                \pgfusepath{stroke}
+                
+                \pgfsetarrowsend{}
+            }
+        }},
+        /separator/venturi/.code = {
+            \pgfkeys{/separator/basic/.append code = {
+                \pgfusepath{stroke}
+                
+                \northeast
+                \pgf@ya = 0.5 \pgf@y
+
+                \pgfpointpolar{30}{\pgf@ya}
+                \pgf@xb = \pgf@x
+                \pgf@yb = \pgf@y
+
+                \pgfpathmoveto{\pgfpoint{\pgf@xb}{\pgf@yb}}
+                \pgfpathlineto{\pgfpointorigin}
+                \pgfpathlineto{\pgfpoint{-0.5 \pgf@xb}{0}}
+                \pgfpathlineto{\pgfpoint{-\pgf@xb}{\pgf@yb}}
+
+                \pgfpathmoveto{\pgfpoint{\pgf@xb}{-\pgf@yb - 1 mm}}
+                \pgfpathlineto{\pgfpoint{0}{- 1 mm}}
+                \pgfpathlineto{\pgfpoint{-0.5 \pgf@xb}{- 1 mm}}
+                \pgfpathlineto{\pgfpoint{-\pgf@xb}{-\pgf@yb - 1 mm}}
+
+                \pgfusepath{stroke}
+                
+                \pgfsetarrowsend{}
+            }
+        }},
+        /separator/.default = {\pgfkeys{/pump/sifter}}
+}
+
+
+\pgfdeclareshape{separator}{
+    \savedanchor{\centerpoint}{
+        \pgfpointorigin
+    }
+    \savedanchor{\north}{
+        \pgfpointscale{0.5}{\pgfpoint{0}{\pgfkeysvalueof{/separator/dimension/height body}}}
+    }
+    \savedanchor{\northeast}{
+        \pgfpointscale{0.5}{\pgfpoint{\pgfkeysvalueof{/separator/dimension/width}}{\pgfkeysvalueof{/separator/dimension/height body}}}
+    }
+    \savedanchor{\east}{
+        \pgfpointscale{0.5}{\pgfpoint{\pgfkeysvalueof{/separator/dimension/width}}{0}}
+    }
+    \savedanchor{\south}{
+        \pgfpointscale{0.5}{\pgfpoint{0}{\pgfkeysvalueof{/separator/dimension/height body}}}
+        \pgfpoint{0}{\pgf@y + \pgfkeysvalueof{/separator/dimension/height cone}}
+        \pgf@y = -\pgf@y
+    }
+    
+    \anchor{center}{
+        \centerpoint
+    }
+    \anchor{north}{
+        \north
+    }
+    \anchor{south}{
+        \south
+    }
+    \anchor{east}{
+        \east
+    }
+    \anchor{west}{
+        \east
+        \pgf@x = -\pgf@x
+    }
+    \anchor{northeast}{
+        \northeast
+    }
+    \anchor{near northeast}{
+        \northeast
+        \pgf@y = 0.75\pgf@y
+    }
+    \anchor{northwest}{
+        \northeast
+        \pgf@x = -\pgf@x
+    }
+    \anchor{near northwest}{
+        \northeast
+        \pgf@y = 0.75\pgf@y
+        \pgf@x = -\pgf@x
+    }
+    \anchor{southeast}{
+        \northeast
+        \pgf@y = -\pgf@y
+    }
+    \anchor{near southeast}{
+        \northeast
+        \pgf@y = -0.75\pgf@y
+    }
+    \anchor{southwest}{
+        \northeast
+        \pgf@x = -\pgf@x
+        \pgf@y = -\pgf@y
+    }
+    \anchor{near southwest}{
+        \northeast
+        \pgf@y = -0.75\pgf@y
+        \pgf@x = -\pgf@x
+    }
+
+    
+    \backgroundpath{
+        \pgfpathmoveto{\north}
+        \pgf@ya = \pgf@y
+        \east
+        \pgf@xa = \pgf@x
+        
+        \pgfpathlineto{\northeast}
+        \northeast
+        \pgfpathlineto{\pgfpoint{\pgf@x}{-\pgf@y}}
+
+        \pgfpathlineto{\south}
+
+        \northeast
+        \pgfpathlineto{\pgfpoint{-\pgf@x}{-\pgf@y}}
+        \northeast
+        \pgfpathlineto{\pgfpoint{-\pgf@x}{\pgf@y}}
+
+        \pgfpathclose
+        
+        \pgfkeys{/separator/basic}
+    
+        \pgfusepath{stroke}
+    }
+}
